@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "lusitanian/oauth": "^0.5.4",
+        "lusitanian/oauth": "^0.5.4"
         
     },
     "autoload": {
