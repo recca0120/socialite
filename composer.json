@@ -1,0 +1,32 @@
+{
+    "name": "recca0120/socialite",
+    "description": "Socialite for Laravel 5",
+    "keywords": ["laravel", "socialite", "PHPoAuthLib"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "recca0120",
+            "email": "recca0120@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/http": "~5.0|~5.1",
+        "illuminate/support": "~5.0|~5.1",
+        "lusitanian/oauth": "~0.3",
+        "illuminate/filesystem": "~5.0|~5.1",
+        "firebase/php-jwt": "~3.0.0"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^2.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Recca0120\\Socialite\\": "src/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    },
+    "minimum-stability": "dev"
+}
