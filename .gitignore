@@ -1,4 +1,7 @@
-/bootstrap/compiled.php
-.env.*.php
-.env.php
-.env
+/backup
+/vendor
+/node_modules
+demo/config.php
+demo/*.json
+demo/*.p12
+composer.lock
