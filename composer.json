@@ -1,7 +1,7 @@
 {
     "name": "recca0120/socialite",
     "description": "Socialite for Laravel 5",
-    "keywords": ["laravel", "socialite", "profiler", "debug", "webprofiler", "nette", "tracy"],
+    "keywords": ["laravel", "socialite", "PHPoAuthLib"],
     "license": "MIT",
     "authors": [
         {
