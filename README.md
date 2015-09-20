@@ -28,6 +28,7 @@ Update config/app.php
     ...
     Recca0120\Socialite\SocialiteServiceProvider::class,
 ];
+```
 
 ## Official Documentation
 
