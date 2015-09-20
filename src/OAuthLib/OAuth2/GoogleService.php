@@ -6,6 +6,7 @@ use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\UriInterface;
 use OAuth\Common\Storage\TokenStorageInterface;
+use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Service\Exception\InvalidScopeException;
 use OAuth\OAuth2\Service\Google;
 
