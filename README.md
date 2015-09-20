@@ -4,6 +4,32 @@
 
 Simulation Laravel Socialite
 
+## Installation
+
+```
+composer require recca0120/socialite
+```
+
+### Laravel 5.0:
+
+Update config/app.php
+```php
+'providers' => [
+    ...
+    'Recca0120\Socialite\SocialiteServiceProvider',
+];
+```
+
+### Laravel 5.1:
+
+Update config/app.php
+```php
+'providers' => [
+    ...
+    Recca0120\Socialite\SocialiteServiceProvider::class,
+];
+```
+
 ## Official Documentation
 
 Documentation for Socialite can be found on the [Laravel website](http://laravel.com/docs/authentication#social-authentication).
