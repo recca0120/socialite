@@ -16,7 +16,6 @@ if (isset($_GET['oauth_token']) === true) {
     dump($socialite->user());
 } else {
     $response = $socialite->with([
-        'access_type' => 'offline',
     ])->redirect();
     $response->send();
 }

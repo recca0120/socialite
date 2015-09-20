@@ -38,7 +38,9 @@ class FacebookProvider extends ProviderFactory
 
     public function getProfileUrl()
     {
-        return '/me';
+        $fields = ['first_name', 'last_name', 'name', 'email', 'gender', 'verified'];
+
+        return '/me?fields='.implode(',', $fields);
     }
 
     /**

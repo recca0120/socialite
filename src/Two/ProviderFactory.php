@@ -81,7 +81,9 @@ class ProviderFactory extends AbstractProviderFactory implements ProviderContrac
     {
         $mapUserToObject = $extra;
         foreach ($this->mapUserToObject as $key => $value) {
-            $mapUserToObject[$key] = array_get($user, $value);
+            if (isset($mapUserToObject[$key]) === false) {
+                $mapUserToObject[$key] = array_get($user, $value);
+            }
         }
 
         return (new User)->setRaw($user)->map($mapUserToObject);
