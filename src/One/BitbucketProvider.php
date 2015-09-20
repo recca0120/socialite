@@ -14,11 +14,6 @@ class BitbucketProvider extends ProviderFactory
         'avatar' => 'user.avatar',
     ];
 
-    public function getProfileUrl()
-    {
-        return '/user';
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -32,5 +27,21 @@ class BitbucketProvider extends ProviderFactory
         ];
 
         return parent::mapUserToObject($user, $extra);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUserByToken($token = '')
+    {
+        $service = $this->getService();
+        $url = '/user';
+
+        $response = $service->request($url, 'GET', null, [
+            'Accept' => 'application/json',
+            // 'Authorization' => 'Bearer '.$token,
+        ]);
+
+        return json_decode($response, true);
     }
 }

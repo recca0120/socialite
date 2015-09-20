@@ -35,8 +35,19 @@ class GoogleProvider extends ProviderFactory
         );
     }
 
-    public function getProfileUrl()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUserByToken($token = '')
     {
-        return 'https://www.googleapis.com/oauth2/v1/userinfo';
+        $service = $this->getService();
+        $url = 'https://www.googleapis.com/oauth2/v1/userinfo';
+
+        $response = $service->request($url, 'GET', null, [
+            'Accept' => 'application/json',
+            // 'Authorization' => 'Bearer '.$token,
+        ]);
+
+        return json_decode($response, true);
     }
 }

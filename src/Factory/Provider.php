@@ -7,7 +7,7 @@ use OAuth\Common\Storage\Session;
 use Recca0120\Socialite\Factory\Traits\MapUserToObject;
 use Recca0120\Socialite\Factory\Traits\Service;
 
-class Provider
+abstract class Provider
 {
     use Service, MapUserToObject;
 
@@ -139,18 +139,18 @@ class Provider
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getUserByToken($token = '')
-    {
-        $service = $this->getService();
-        $response = $service->request($this->getProfileUrl(), 'GET', null, array_merge($this->extraHeaders, [
-            // 'Authorization' => 'Bearer '.$token,
-        ]));
+    // /**
+    //  * {@inheritdoc}
+    //  */
+    // protected function getUserByToken($token = '')
+    // {
+    //     $service = $this->getService();
+    //     $response = $service->request($this->getProfileUrl(), 'GET', null, array_merge($this->extraHeaders, [
+    //         // 'Authorization' => 'Bearer '.$token,
+    //     ]));
 
-        return json_decode($response, true);
-    }
+    //     return json_decode($response, true);
+    // }
 
     public static function factory($driver, Request $request, $config)
     {
@@ -165,4 +165,17 @@ class Provider
             return new static($driver, $request, $config);
         }
     }
+
+    /**
+     * Get the raw user for the given access token.
+     *
+     * @param  string  $token
+     * @return array
+     */
+    abstract protected function getUserByToken($token = '');
+
+    /**
+     * {@inheritdoc}
+     */
+    abstract public function user();
 }

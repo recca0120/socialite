@@ -14,8 +14,19 @@ class TwitterProvider extends ProviderFactory
         'avatar' => 'profile_image_url',
     ];
 
-    public function getProfileUrl()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUserByToken($token = '')
     {
-        return '/account/verify_credentials.json?include_email=true';
+        $service = $this->getService();
+        $url = '/account/verify_credentials.json?include_email=true';
+
+        $response = $service->request($url, 'GET', null, [
+            'Accept' => 'application/json',
+            // 'Authorization' => 'Bearer '.$token,
+        ]);
+
+        return json_decode($response, true);
     }
 }

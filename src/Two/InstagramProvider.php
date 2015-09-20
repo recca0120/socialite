@@ -23,8 +23,19 @@ class InstagramProvider extends ProviderFactory
         'avatar' => 'data.profile_picture',
     ];
 
-    public function getProfileUrl()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUserByToken($token = '')
     {
-        return 'users/self';
+        $service = $this->getService();
+        $url = 'users/self';
+
+        $response = $service->request($url, 'GET', null, [
+            'Accept' => 'application/json',
+            // 'Authorization' => 'Bearer '.$token,
+        ]);
+
+        return json_decode($response, true);
     }
 }

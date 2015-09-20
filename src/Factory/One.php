@@ -7,7 +7,7 @@ use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\Factory\User\One as User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class One extends Provider implements ProviderContract
+abstract class One extends Provider implements ProviderContract
 {
     /**
      * Redirect the user to the authentication page for the provider.
@@ -60,5 +60,15 @@ class One extends Provider implements ProviderContract
     protected function getUserObject()
     {
         return new User;
+    }
+
+    /**
+     * Determine if the request has the necessary OAuth verifier.
+     *
+     * @return bool
+     */
+    protected function hasNecessaryVerifier()
+    {
+        return $this->request->has('oauth_token') && $this->request->has('oauth_verifier');
     }
 }

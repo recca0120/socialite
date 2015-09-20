@@ -36,18 +36,6 @@ class LinkedInProvider extends ProviderFactory
         'picture-urls::(original)',
     ];
 
-    protected $extraHeaders = [
-        'x-li-format' => 'json',
-    ];
-
-    public function getProfileUrl()
-    {
-        $fields = implode(',', $this->fields);
-        $url = 'https://api.linkedin.com/v1/people/~:('.$fields.')';
-
-        return $url;
-    }
-
     protected $mapUserToObject = [
         'id' => 'id',
         'name' => 'formattedName',
@@ -58,12 +46,29 @@ class LinkedInProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user, $extra = [])
     {
         $extra = [
             'avatar_original' => array_get($user, 'pictureUrls.values.0'),
         ];
 
         return parent::mapUserToObject($user, $extra);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUserByToken($token = '')
+    {
+        $service = $this->getService();
+        $url = 'users/self';
+
+        $response = $service->request($url, 'GET', null, [
+            'Accept' => 'application/json',
+            'x-li-format' => 'json',
+            // 'Authorization' => 'Bearer '.$token,
+        ]);
+
+        return json_decode($response, true);
     }
 }

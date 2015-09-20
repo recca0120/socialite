@@ -8,7 +8,7 @@ use Recca0120\Socialite\Factory\Traits\Stateless;
 use Recca0120\Socialite\Factory\User\Two as User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class Two extends Provider implements ProviderContract
+abstract class Two extends Provider implements ProviderContract
 {
     use Stateless;
 

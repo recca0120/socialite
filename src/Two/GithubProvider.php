@@ -25,8 +25,19 @@ class GithubProvider extends ProviderFactory
         'avatar' => 'avatar_url',
     ];
 
-    public function getProfileUrl()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUserByToken($token = '')
     {
-        return 'user';
+        $service = $this->getService();
+        $url = 'user';
+
+        $response = $service->request($url, 'GET', null, [
+            'Accept' => 'application/json',
+            // 'Authorization' => 'Bearer '.$token,
+        ]);
+
+        return json_decode($response, true);
     }
 }
