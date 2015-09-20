@@ -3,7 +3,6 @@
 namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
-use OAuth\Common\Storage\Session;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\Factory\Traits\Service;
 
@@ -31,13 +30,6 @@ abstract class Provider implements ProviderContract
      * @var array
      */
     protected $config;
-
-    /**
-     * The Storage.
-     *
-     * @var Storage
-     */
-    protected $storage;
 
     /**
      * The custom parameters to be sent with the request.
@@ -68,7 +60,6 @@ abstract class Provider implements ProviderContract
         $this->driver = $driver;
         $this->request = $request;
         $this->config = $config;
-        $this->storage = new Session();
     }
 
     /**

@@ -30,7 +30,7 @@ class FacebookProvider extends ProviderFactory
         return $serviceFactory->createService(
             $this->driver,
             $credentials,
-            $this->storage,
+            $this->getStorage(),
             $this->scopes,
             null,
             array_get($this->config, 'version', $this->version)

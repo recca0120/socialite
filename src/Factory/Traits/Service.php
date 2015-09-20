@@ -5,10 +5,20 @@ namespace Recca0120\Socialite\Factory\Traits;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\CurlClient;
 use OAuth\Common\Service\AbstractService;
+use OAuth\Common\Storage\SymfonySession as Storage;
 use OAuth\ServiceFactory;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage as SessionStorage;
 
 trait Service
 {
+    /**
+     * The Storage.
+     *
+     * @var Storage
+     */
+    protected $storage;
+
     /**
      * The scopes being requested.
      *
@@ -39,14 +49,30 @@ trait Service
         return $this->service;
     }
 
+    protected function createStorage()
+    {
+        $session = new Session(new SessionStorage);
+        $session->start();
+        $this->storage = new Storage($session);
+
+        return $this->storage;
+    }
+
     protected function createService(ServiceFactory $serviceFactory, Credentials $credentials)
     {
         return $serviceFactory->createService(
             $this->driver,
             $credentials,
-            $this->storage,
+            $this->createStorage(),
             $this->scopes
         );
+    }
+
+    public function __destruct()
+    {
+        if (empty($this->storage) === false) {
+            $this->storage->getSession()->save();
+        }
     }
 
     public function __call($method, $parameters)

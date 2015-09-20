@@ -27,7 +27,7 @@ class GoogleProvider extends ProviderFactory
         return $serviceFactory->createService(
             $this->driver,
             $credentials,
-            $this->storage,
+            $this->getStorage(),
             $this->scopes,
             null,
             $this->isStateless(),
