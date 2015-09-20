@@ -1,1 +1,3 @@
 demo/config.php
+demo/*.json
+demo/*.p12
