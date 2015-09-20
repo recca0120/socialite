@@ -5,7 +5,7 @@ namespace Recca0120\Socialite\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Laravel\Socialite\SocialiteManager
+ * @see \Recca0120\Socialite\SocialiteManager
  */
 class Socialite extends Facade
 {
