@@ -24,7 +24,7 @@ class GoogleServiceProvider extends ProviderFactory
      */
     protected function createStorage()
     {
-        $sessionId = md5(json_encode($this->scopes).json_encode($this->config));
+        $sessionId = md5(json_encode([$this->scopes, $this->config]));
         $session = new Session(new SessionStorage);
         $session->setId($sessionId);
         $session->start();
