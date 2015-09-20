@@ -55,7 +55,7 @@ class GoogleService extends Google
     public function requestAccessToken($code, $state = null)
     {
         $bodyParams = [
-            'grant_type'    => 'assertion',
+            'grant_type' => 'assertion',
             'assertion_type' => $this->assertionType,
             'assertion' => $this->generateAssertion(),
         ];
@@ -70,6 +70,20 @@ class GoogleService extends Google
         $this->storage->storeAccessToken($this->service(), $token);
 
         return $token;
+    }
+
+    /**
+     * Refreshes an OAuth2 access token.
+     *
+     * @param TokenInterface $token
+     *
+     * @return TokenInterface $token
+     *
+     * @throws MissingRefreshTokenException
+     */
+    public function refreshAccessToken(TokenInterface $token)
+    {
+        return $this->requestAccessToken();
     }
 
     protected function generateAssertion()
