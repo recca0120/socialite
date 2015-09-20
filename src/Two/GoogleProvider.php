@@ -5,6 +5,7 @@ namespace Recca0120\Socialite\Two;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\OAuth2\Service\Google;
 use OAuth\ServiceFactory;
+use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
 class GoogleProvider extends ProviderFactory
 {

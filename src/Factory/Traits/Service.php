@@ -1,6 +1,6 @@
 <?php
 
-namespace Recca0120\Socialite\OAuthTraits;
+namespace Recca0120\Socialite\Factory\Traits;
 
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\CurlClient;
@@ -24,7 +24,7 @@ trait Service
             if (function_exists('curl_version') === true) {
                 $httpClient = new CurlClient;
                 $httpClient->setCurlParameters([
-                    CURLOPT_CAINFO => __DIR__.'/../../cert/ca-bundle.crt',
+                    CURLOPT_CAINFO => __DIR__.'/../../../cert/ca-bundle.crt',
                 ]);
             }
             $serviceFactory->setHttpClient($httpClient);
@@ -47,5 +47,10 @@ trait Service
             $this->storage,
             $this->scopes
         );
+    }
+
+    public function __call($method, $parameters)
+    {
+        return call_user_func_array([$this->getService(), $method], $parameters);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Recca0120\Socialite\OAuthTraits;
+namespace Recca0120\Socialite\Factory\Traits;
 
 trait Stateless
 {

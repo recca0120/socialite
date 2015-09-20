@@ -1,14 +1,15 @@
 <?php
 
-namespace Recca0120\Socialite;
+namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
 use OAuth\Common\Storage\Session;
-use Recca0120\Socialite\OAuthTraits\Service;
+use Recca0120\Socialite\Factory\Traits\MapUserToObject;
+use Recca0120\Socialite\Factory\Traits\Service;
 
-class AbstractProviderFactory
+class Provider
 {
-    use Service;
+    use Service, MapUserToObject;
 
     /**
      * The HTTP request instance.
@@ -53,14 +54,6 @@ class AbstractProviderFactory
     protected $scopes = [];
 
     protected $extraHeaders = [];
-
-    protected $mapUserToObject = [
-        'id' => 'id',
-        'nickname' => 'nickname',
-        'name' => 'name',
-        'email' => 'email',
-        'avatar' => 'picture',
-    ];
 
     /**
      * Create a new provider instance.
@@ -159,15 +152,11 @@ class AbstractProviderFactory
         return json_decode($response, true);
     }
 
-    public function __call($method, $parameters)
-    {
-        return call_user_func_array([$this->getService(), $method], $parameters);
-    }
-
     public static function factory($driver, Request $request, $config)
     {
-        $classOne = __NAMESPACE__.'\\One\\'.ucfirst($driver).'Provider';
-        $classTwo = __NAMESPACE__.'\\Two\\'.ucfirst($driver).'Provider';
+        $classOne = '\\Recca0120\\Socialite\\One\\'.ucfirst($driver).'Provider';
+        $classTwo = '\\Recca0120\\Socialite\\Two\\'.ucfirst($driver).'Provider';
+
         if (class_exists($classTwo) === true) {
             return new $classTwo($driver, $request, $config);
         } elseif (class_exists($classOne) === true) {

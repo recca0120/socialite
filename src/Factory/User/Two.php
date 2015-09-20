@@ -1,10 +1,8 @@
 <?php
 
-namespace Recca0120\Socialite\Two;
+namespace Recca0120\Socialite\Factory\User;
 
-use Laravel\Socialite\AbstractUser;
-
-class User extends AbstractUser
+class Two extends AbstractUser
 {
     /**
      * The user's access token.

@@ -2,6 +2,8 @@
 
 namespace Recca0120\Socialite\One;
 
+use Recca0120\Socialite\Factory\One as ProviderFactory;
+
 class TwitterProvider extends ProviderFactory
 {
     protected $mapUserToObject = [

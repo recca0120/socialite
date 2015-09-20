@@ -19,7 +19,12 @@ class Facebook extends baseFacebook
         if (null === $data || ! is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
-            throw new TokenResponseException('Error in retrieving token: "'.$data['error'].'"');
+            if (is_array($data['error']) === true) {
+                $errorMessage = $data['error']['message'];
+            } else {
+                $errorMessage = $data['error'];
+            }
+            throw new TokenResponseException('Error in retrieving token: "'.$errorMessage.'"');
         }
 
         $token = new StdOAuth2Token();

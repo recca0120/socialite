@@ -5,6 +5,7 @@ namespace Recca0120\Socialite\Two;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\OAuth2\Service\Facebook;
 use OAuth\ServiceFactory;
+use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
 class FacebookProvider extends ProviderFactory
 {
@@ -46,9 +47,9 @@ class FacebookProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function mapUserToObject(array $user)
+    protected function mapUserToObject(array $user, $extra = [])
     {
-        $extra['avatar'] = $this->graphUrl.$this->getApiVersionString().'/'.array_get($user, 'id', 'me').'/picture';
+        $extra['avatar'] = $this->graphUrl.'/'.$this->version.'/'.array_get($user, 'id', 'me').'/picture';
         $extra['avatar_original'] = $extra['avatar'].'?width=1920';
 
         if (empty($user['name']) == true) {

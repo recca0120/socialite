@@ -1,10 +1,11 @@
 <?php
 
-namespace Recca0120\Socialite;
+namespace Recca0120\Socialite\Factory\User;
 
 use ArrayAccess;
+use Recca0120\Socialite\Contracts\User;
 
-abstract class AbstractUser implements ArrayAccess, Contracts\User
+abstract class AbstractUser implements ArrayAccess, User
 {
     /**
      * The unique identifier for the user.

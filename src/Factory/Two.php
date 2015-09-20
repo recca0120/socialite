@@ -1,14 +1,14 @@
 <?php
 
-namespace Recca0120\Socialite\Two;
+namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
-use Recca0120\Socialite\AbstractProviderFactory;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
-use Recca0120\Socialite\OAuthTraits\Stateless;
+use Recca0120\Socialite\Factory\Traits\Stateless;
+use Recca0120\Socialite\Factory\User\Two as User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class ProviderFactory extends AbstractProviderFactory implements ProviderContract
+class Two extends Provider implements ProviderContract
 {
     use Stateless;
 
@@ -74,18 +74,8 @@ class ProviderFactory extends AbstractProviderFactory implements ProviderContrac
         return $this->request->input('code');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function mapUserToObject(array $user, $extra = [])
+    protected function getUserObject()
     {
-        $mapUserToObject = $extra;
-        foreach ($this->mapUserToObject as $key => $value) {
-            if (isset($mapUserToObject[$key]) === false) {
-                $mapUserToObject[$key] = array_get($user, $value);
-            }
-        }
-
-        return (new User)->setRaw($user)->map($mapUserToObject);
+        return new User;
     }
 }

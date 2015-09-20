@@ -3,6 +3,7 @@
 namespace Recca0120\Socialite\One;
 
 use Illuminate\Http\Request;
+use Recca0120\Socialite\Factory\One as ProviderFactory;
 
 class BitbucketProvider extends ProviderFactory
 {

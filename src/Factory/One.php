@@ -1,13 +1,13 @@
 <?php
 
-namespace Recca0120\Socialite\One;
+namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
-use Recca0120\Socialite\AbstractProviderFactory;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
+use Recca0120\Socialite\Factory\User\One as User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class ProviderFactory extends AbstractProviderFactory implements ProviderContract
+class One extends Provider implements ProviderContract
 {
     /**
      * Redirect the user to the authentication page for the provider.
@@ -57,16 +57,8 @@ class ProviderFactory extends AbstractProviderFactory implements ProviderContrac
         return $token;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function mapUserToObject(array $user, $extra = [])
+    protected function getUserObject()
     {
-        $mapUserToObject = $extra;
-        foreach ($this->mapUserToObject as $key => $value) {
-            $mapUserToObject[$key] = array_get($user, $value);
-        }
-
-        return (new User)->setRaw($user)->map($mapUserToObject);
+        return new User;
     }
 }

@@ -3,6 +3,7 @@
 namespace Recca0120\Socialite\Two;
 
 use OAuth\OAuth2\Service\Instagram;
+use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
 class InstagramProvider extends ProviderFactory
 {
