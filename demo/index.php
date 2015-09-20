@@ -3,7 +3,12 @@
 require __DIR__.'/../../../autoload.php';
 require __DIR__.'/config.php';
 
+use Illuminate\Http\Request;
 use Recca0120\Socialite\SocialiteManager;
+
+$request = Request::capture();
+$driver = 'linkedin';
+$app = getApp($request);
 
 $socialiteManager = new SocialiteManager($app);
 $socialite = $socialiteManager

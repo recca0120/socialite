@@ -16,12 +16,21 @@ class InstagramProvider extends ProviderFactory
         Instagram::SCOPE_BASIC,
     ];
 
-    protected $mapUserToObject = [
-        'id' => 'data.id',
-        'nickname' => 'login',
-        'name' => 'data.name',
-        'avatar' => 'data.profile_picture',
-    ];
+    /**
+     * {@inheritdoc}
+     */
+    protected function mapUserToObject(array $user)
+    {
+        $map = [
+            'id' => array_get($user, 'data.id'),
+            'nickname' => array_get($user, 'login'),
+            'name' => array_get($user, 'data.name'),
+            'email' => null,
+            'avatar' => array_get($user, 'data.profile_picture'),
+        ];
+
+        return $this->getUserObject()->setRaw($user)->map($map);
+    }
 
     /**
      * {@inheritdoc}
@@ -32,7 +41,7 @@ class InstagramProvider extends ProviderFactory
         $url = 'users/self';
 
         $response = $service->request($url, 'GET', null, [
-            'Accept' => 'application/json',
+            // 'Accept' => 'application/json',
             // 'Authorization' => 'Bearer '.$token,
         ]);
 

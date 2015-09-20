@@ -18,55 +18,46 @@ class LinkedInProvider extends ProviderFactory
     ];
 
     /**
-     * The fields that are included in the profile.
-     *
-     * @var array
-     */
-    protected $fields = [
-        'id',
-        'first-name',
-        'last-name',
-        'formatted-name',
-        'email-address',
-        'headline',
-        'location',
-        'industry',
-        'public-profile-url',
-        'picture-url',
-        'picture-urls::(original)',
-    ];
-
-    protected $mapUserToObject = [
-        'id' => 'id',
-        'name' => 'formattedName',
-        'email' => 'emailAddress',
-        'avatar' => 'pictureUrl',
-    ];
-
-    /**
      * {@inheritdoc}
      */
-    protected function mapUserToObject(array $user, $extra = [])
+    protected function mapUserToObject(array $user)
     {
-        $extra = [
+        $map = [
+            'id' => array_get($user, 'id'),
+            'nickname' => null,
+            'name' => array_get($user, 'formattedName'),
+            'email' => array_get($user, 'emailAddress'),
+            'avatar' => array_get($user, 'pictureUrl'),
             'avatar_original' => array_get($user, 'pictureUrls.values.0'),
         ];
 
-        return parent::mapUserToObject($user, $extra);
+        return $this->getUserObject()->setRaw($user)->map($map);
     }
-
     /**
      * {@inheritdoc}
      */
     protected function getUserByToken($token = '')
     {
         $service = $this->getService();
-        $url = 'users/self';
+        $fields = [
+            'id',
+            'first-name',
+            'last-name',
+            'formatted-name',
+            'email-address',
+            'headline',
+            'location',
+            'industry',
+            'public-profile-url',
+            'picture-url',
+            'picture-urls::(original)',
+        ];
+        $url = 'https://api.linkedin.com/v1/people/~:('.implode(',', $fields).')';
 
         $response = $service->request($url, 'GET', null, [
-            'Accept' => 'application/json',
-            'x-li-format' => 'json',
+            // 'Accept' => 'application/json',
             // 'Authorization' => 'Bearer '.$token,
+            'x-li-format' => 'json',
         ]);
 
         return json_decode($response, true);

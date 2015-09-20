@@ -7,26 +7,25 @@ use Recca0120\Socialite\Factory\One as ProviderFactory;
 
 class BitbucketProvider extends ProviderFactory
 {
-    protected $mapUserToObject = [
-        'id' => 'user.username',
-        'nickname' => 'user.username',
-        'name' => 'user.display_name',
-        'avatar' => 'user.avatar',
-    ];
-
     /**
      * {@inheritdoc}
      */
-    protected function mapUserToObject(array $user, $extra = [])
+    protected function mapUserToObject(array $user)
     {
         $service = $this->getService();
 
         $user['emails'] = json_decode($service->request('/users/'.array_get($user, 'user.username').'/emails'), true);
-        $extra = [
+
+        $map = [
+            'id' => array_get($user, 'user.username'),
+            'nickname' => array_get($user, 'user.username'),
+            'name' => array_get($user, 'user.display_name'),
             'email' => array_get($user, 'emails.0.email'),
+            'avatar' => array_get($user, 'user.avatar'),
+
         ];
 
-        return parent::mapUserToObject($user, $extra);
+        return $this->getUserObject()->setRaw($user)->map($map);
     }
 
     /**
@@ -38,7 +37,7 @@ class BitbucketProvider extends ProviderFactory
         $url = '/user';
 
         $response = $service->request($url, 'GET', null, [
-            'Accept' => 'application/json',
+            // 'Accept' => 'application/json',
             // 'Authorization' => 'Bearer '.$token,
         ]);
 

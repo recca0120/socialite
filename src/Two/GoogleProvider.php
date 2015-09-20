@@ -38,13 +38,29 @@ class GoogleProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
+    protected function mapUserToObject(array $user)
+    {
+        $map = [
+            'id' => array_get($user, 'id'),
+            'nickname' => array_get($user, 'nickname'),
+            'name' => array_get($user, 'name'),
+            'email' => array_get($user, 'email'),
+            'avatar' => array_get($user, 'picture'),
+        ];
+
+        return $this->getUserObject()->setRaw($user)->map($map);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function getUserByToken($token = '')
     {
         $service = $this->getService();
         $url = 'https://www.googleapis.com/oauth2/v1/userinfo';
 
         $response = $service->request($url, 'GET', null, [
-            'Accept' => 'application/json',
+            // 'Accept' => 'application/json',
             // 'Authorization' => 'Bearer '.$token,
         ]);
 

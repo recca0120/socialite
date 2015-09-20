@@ -4,12 +4,11 @@ namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
 use OAuth\Common\Storage\Session;
-use Recca0120\Socialite\Factory\Traits\MapUserToObject;
 use Recca0120\Socialite\Factory\Traits\Service;
 
 abstract class Provider
 {
-    use Service, MapUserToObject;
+    use Service;
 
     /**
      * The HTTP request instance.
@@ -53,8 +52,6 @@ abstract class Provider
      */
     protected $scopes = [];
 
-    protected $extraHeaders = [];
-
     /**
      * Create a new provider instance.
      *
@@ -72,23 +69,6 @@ abstract class Provider
         $this->config = $config;
         $this->storage = new Session();
     }
-
-    /**
-     * Get the raw user for the given access token.
-     *
-     * @param  string  $token
-     * @return array
-     */
-    // abstract protected function getUserByToken($token);
-
-    /**
-     * Map the raw user array to a Socialite User instance.
-     *
-     * @param  array  $user
-     * @return \Recca0120\Socialite\User
-     */
-    // abstract protected function mapUserToObject(array $user);
-
 
     /**
      * Set the scopes of the requested access.
@@ -139,19 +119,6 @@ abstract class Provider
         return '';
     }
 
-    // /**
-    //  * {@inheritdoc}
-    //  */
-    // protected function getUserByToken($token = '')
-    // {
-    //     $service = $this->getService();
-    //     $response = $service->request($this->getProfileUrl(), 'GET', null, array_merge($this->extraHeaders, [
-    //         // 'Authorization' => 'Bearer '.$token,
-    //     ]));
-
-    //     return json_decode($response, true);
-    // }
-
     public static function factory($driver, Request $request, $config)
     {
         $classOne = '\\Recca0120\\Socialite\\One\\'.ucfirst($driver).'Provider';
@@ -167,6 +134,11 @@ abstract class Provider
     }
 
     /**
+     * {@inheritdoc}
+     */
+    abstract public function user();
+
+    /**
      * Get the raw user for the given access token.
      *
      * @param  string  $token
@@ -175,7 +147,10 @@ abstract class Provider
     abstract protected function getUserByToken($token = '');
 
     /**
-     * {@inheritdoc}
+     * Map the raw user array to a Socialite User instance.
+     *
+     * @param  array  $user
+     * @return \Recca0120\Socialite\User
      */
-    abstract public function user();
+    abstract protected function mapUserToObject(array $user);
 }

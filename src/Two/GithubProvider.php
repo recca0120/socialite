@@ -17,13 +17,21 @@ class GithubProvider extends ProviderFactory
         GitHub::SCOPE_USER_EMAIL,
     ];
 
-    protected $mapUserToObject = [
-        'id' => 'id',
-        'nickname' => 'login',
-        'name' => 'name',
-        'email' => 'email',
-        'avatar' => 'avatar_url',
-    ];
+    /**
+     * {@inheritdoc}
+     */
+    protected function mapUserToObject(array $user)
+    {
+        $map = [
+            'id' => array_get($user, 'id'),
+            'nickname' => array_get($user, 'login'),
+            'name' => array_get($user, 'name'),
+            'email' => array_get($user, 'email'),
+            'avatar' => array_get($user, 'avatar_url'),
+        ];
+
+        return $this->getUserObject()->setRaw($user)->map($map);
+    }
 
     /**
      * {@inheritdoc}
@@ -34,7 +42,7 @@ class GithubProvider extends ProviderFactory
         $url = 'user';
 
         $response = $service->request($url, 'GET', null, [
-            'Accept' => 'application/json',
+            // 'Accept' => 'application/json',
             // 'Authorization' => 'Bearer '.$token,
         ]);
 
