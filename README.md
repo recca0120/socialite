@@ -20,6 +20,13 @@ Update config/app.php
 ];
 ```
 
+```php
+'aliases' => [
+    ...
+    'Socialite' => 'Recca0120\Socialite\Facades\Socialite'
+];
+```
+
 ### Laravel 5.1:
 
 Update config/app.php
@@ -27,6 +34,13 @@ Update config/app.php
 'providers' => [
     ...
     Recca0120\Socialite\SocialiteServiceProvider::class,
+];
+```
+
+```php
+'alias' => [
+    ...
+    'Socialite' => Recca0120\Socialite\Facades\Socialite::class
 ];
 ```
 
