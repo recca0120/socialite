@@ -4,9 +4,10 @@ namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
 use OAuth\Common\Storage\Session;
+use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\Factory\Traits\Service;
 
-abstract class Provider
+abstract class Provider implements ProviderContract
 {
     use Service;
 
@@ -132,11 +133,6 @@ abstract class Provider
             return new static($driver, $request, $config);
         }
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    abstract public function user();
 
     /**
      * Get the raw user for the given access token.
