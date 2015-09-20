@@ -7,15 +7,18 @@ use Illuminate\Http\Request;
 use Recca0120\Socialite\SocialiteManager;
 
 $request = Request::capture();
-$driver = 'linkedin';
+$driver = 'googleservice';
 $app = getApp($request);
 
 $socialiteManager = new SocialiteManager($app);
 $socialite = $socialiteManager
     ->driver($driver)
     ->stateless();
-
-if (isset($_GET['oauth_token']) === true) {
+if ($driver === 'googleservice') {
+    dump($socialite->scopes([
+        'https://www.googleapis.com/auth/analytics.readonly'
+    ])->getAccessToken());
+} else if (isset($_GET['oauth_token']) === true) {
     dump($socialite->user());
 } elseif (isset($_GET['code']) === true) {
     dump($socialite->user());

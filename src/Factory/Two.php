@@ -25,7 +25,7 @@ abstract class Two extends Provider implements ProviderContract
             unset($this->parameters['access_type']);
         }
 
-        $url = $this->getService()->getAuthorizationUri($this->parameters)->getAbsoluteUri();
+        $url = $service->getAuthorizationUri($this->parameters)->getAbsoluteUri();
 
         return new RedirectResponse($url);
     }
@@ -50,14 +50,14 @@ abstract class Two extends Provider implements ProviderContract
      */
     public function getAccessToken($code = '')
     {
+        $service = $this->getService();
         if (empty($code) === true) {
-            $token = $this->storage->retrieveAccessToken(ucfirst($this->driver));
+            $token = $this->storage->retrieveAccessToken($service->service());
             // if ($token->isExpired() === true) {
             //     $this->getService()->refreshAccessToken($token);
             // }
         } else {
             $state = $this->request->input('state');
-            $service = $this->getService();
             $token = $service->requestAccessToken($code, $state);
         }
 

@@ -51,6 +51,17 @@ trait Service
 
     public function __call($method, $parameters)
     {
-        return call_user_func_array([$this->getService(), $method], $parameters);
+        $service = $this->getService();
+        if (method_exists($service, $method)) {
+            return call_user_func_array([$this->getService(), $method], $parameters);
+        } else {
+            $trace = array_reverse(debug_backtrace());
+            $message = 'Call to undefined method '.$trace[0]['class'].'::'.$method.'()';
+            $code = 0;
+            $severity = 1;
+            $file = $trace[0]['file'];
+            $line = $trace[0]['line'] - 2;
+            throw new \ErrorException($message, $code, $severity, $file, $line);
+        }
     }
 }

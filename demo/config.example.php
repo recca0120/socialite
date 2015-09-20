@@ -22,6 +22,11 @@ function getApp($request)
                 'client_secret' => '',
                 'redirect' => $request->url().'?/callback',
             ],
+            'services.googleservice' => [
+                'client_id' => '',
+                'client_secret' => '',
+                'redirect' => $request->url().'?/callback',
+            ],
             'services.facebook' => [
                 'client_id' => '',
                 'client_secret' => '',
