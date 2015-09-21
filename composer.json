@@ -11,10 +11,10 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/http": "~5.0",
-        "illuminate/support": "~5.0",
-        "lusitanian/oauth": "^0.5.4",
-        "illuminate/filesystem": "^5.2@dev"
+        "illuminate/http": "5.1.*|5.0.*",
+        "illuminate/support": "5.1.*|5.0.*",
+        "lusitanian/oauth": "~0.5.4",
+        "illuminate/filesystem": "5.1.*|5.0.*"
     },
     "require-dev": {
         "symfony/var-dumper": "^2.7"
