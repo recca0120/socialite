@@ -40,8 +40,8 @@ class SocialiteManager extends Manager implements Contracts\Factory
             return $this->$method();
         } else {
             $config = $this->app['config']['services.'.$driver];
-
-            return ProviderFactory::factory($driver, $this->app['request'], $config);
+            $request = array_get($this->app, 'request');
+            return ProviderFactory::factory($driver, $config, $request);
         }
 
         throw new InvalidArgumentException("Driver [$driver] not supported.");

@@ -55,11 +55,16 @@ abstract class Provider implements ProviderContract
      * @param  string  $redirectUrl
      * @return void
      */
-    public function __construct($driver, Request $request, $config)
+    public function __construct($driver, $config, Request $request = null)
     {
         $this->driver = $driver;
-        $this->request = $request;
         $this->config = $config;
+
+        if ($request === null) {
+            $request = new Request;
+        }
+
+        $this->request = $request;
     }
 
     /**
@@ -111,17 +116,17 @@ abstract class Provider implements ProviderContract
         return '';
     }
 
-    public static function factory($driver, Request $request, $config)
+    public static function factory($driver, $config, Request $request = null)
     {
         $classOne = '\\Recca0120\\Socialite\\One\\'.ucfirst($driver).'Provider';
         $classTwo = '\\Recca0120\\Socialite\\Two\\'.ucfirst($driver).'Provider';
 
         if (class_exists($classTwo) === true) {
-            return new $classTwo($driver, $request, $config);
+            return new $classTwo($driver, $config, $request);
         } elseif (class_exists($classOne) === true) {
-            return new $classOne($driver, $request, $config);
+            return new $classOne($driver, $config, $request);
         } else {
-            return new static($driver, $request, $config);
+            return new static($driver, $config, $request);
         }
     }
 

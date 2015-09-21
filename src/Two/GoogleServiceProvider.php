@@ -22,24 +22,28 @@ class GoogleServiceProvider extends ProviderFactory
      * @param  string  $redirectUrl
      * @return void
      */
-    protected function createStorage()
-    {
-        $sessionId = md5(json_encode([$this->scopes, $this->config]));
-        $session = new Session(new SessionStorage);
-        $session->setId($sessionId);
-        $session->start();
+    // protected function createStorage()
+    // {
+    //     $sessionId = md5(json_encode([$this->scopes, $this->config]));
+    //     $session = new Session(new SessionStorage);
+    //     $session->setId($sessionId);
+    //     $session->start();
 
-        $this->storage = new Storage($session);
-        $session = $this->storage->getSession();
+    //     $this->storage = new Storage($session);
+    //     $session = $this->storage->getSession();
 
-        return $this->storage;
-    }
+    //     return $this->storage;
+    // }
 
-    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials)
+    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials, $sessionId = null)
     {
         $serviceFactory->registerService('googleservice', '\Recca0120\Socialite\OAuthLib\OAuth2\GoogleService');
+        $sessionId = [
+            $credentials,
+            $this->scopes,
+        ];
 
-        return parent::createService($serviceFactory, $credentials);
+        return parent::createService($serviceFactory, $credentials, $sessionId);
     }
 
     /**

@@ -23,14 +23,14 @@ class FacebookProvider extends ProviderFactory
 
     public $graphUrl = 'https://graph.facebook.com';
 
-    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials)
+    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials, $sessionId = null)
     {
         $serviceFactory->registerService('facebook', '\Recca0120\Socialite\OAuthLib\OAuth2\Facebook');
 
         return $serviceFactory->createService(
             $this->driver,
             $credentials,
-            $this->getStorage(),
+            $this->createStorage($sessionId),
             $this->scopes,
             null,
             array_get($this->config, 'version', $this->version)

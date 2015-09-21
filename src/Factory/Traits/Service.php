@@ -2,13 +2,17 @@
 
 namespace Recca0120\Socialite\Factory\Traits;
 
+// use Illuminate\Filesystem\Filesystem;
+// use Illuminate\Session\FileSessionHandler;
+// use Illuminate\Session\Store as LaravelSession;
 use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Http\Client\CurlClient;
 use OAuth\Common\Service\AbstractService;
 use OAuth\Common\Storage\SymfonySession as Storage;
 use OAuth\ServiceFactory;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage as SessionStorage;
+use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage as SymfonyFileHandler;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage as SymfonySessionHandler;
 
 trait Service
 {
@@ -38,41 +42,70 @@ trait Service
                 ]);
             }
             $serviceFactory->setHttpClient($httpClient);
+
             $credentials = new Credentials(
                 array_get($this->config, 'client_id'),
                 array_get($this->config, 'client_secret'),
                 array_get($this->config, 'redirect')
             );
+
             $this->service = $this->createService($serviceFactory, $credentials);
         }
 
         return $this->service;
     }
 
-    protected function createStorage()
+    protected function createStorage($sessionId = null)
     {
-        $session = new Session(new SessionStorage);
-        $session->start();
+        if ($sessionId !== null) {
+            $name = 'Recca0120Socialite';
+            $sessionId = sha1(serialize($sessionId));
+            $path = sys_get_temp_dir().'/'.$name;
+            // $name = 'Recca0120Socialite';
+            // $file = new Filesystem;
+            // $path = session_save_path();
+            // $handler = new FileSessionHandler($file, $path);
+            // $session = new LaravelSession($name, $handler, $sessionId);
+            // $session->start();
+            // $this->registerShutdown();
+            $handler = new SymfonyFileHandler($path);
+            $session = new SymfonySession($handler);
+            $session->setId($sessionId);
+            $session->start();
+            $this->registerShutdown();
+        } else {
+            $session = $this->request->getSession();
+            if ($session === null) {
+                $handler = new SymfonySessionHandler;
+                $session = new SymfonySession($handler);
+                $session->start();
+                $this->registerShutdown();
+            }
+        }
         $this->storage = new Storage($session);
 
         return $this->storage;
     }
 
-    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials)
+    public function registerShutdown()
+    {
+        register_shutdown_function(function () {
+            $session = $this->storage->getSession();
+            $session->save();
+            $included_files = get_included_files();
+            dump($included_files);
+            exit;
+        });
+    }
+
+    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials, $sessionId = null)
     {
         return $serviceFactory->createService(
             $this->driver,
             $credentials,
-            $this->createStorage(),
+            $this->createStorage($sessionId),
             $this->scopes
         );
-    }
-
-    public function __destruct()
-    {
-        if (empty($this->storage) === false) {
-            $this->storage->getSession()->save();
-        }
     }
 
     public function __call($method, $parameters)

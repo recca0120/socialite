@@ -22,12 +22,12 @@ class GoogleProvider extends ProviderFactory
 
     public $version = '';
 
-    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials)
+    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials, $sessionId = null)
     {
         return $serviceFactory->createService(
             $this->driver,
             $credentials,
-            $this->getStorage(),
+            $this->createStorage($sessionId),
             $this->scopes,
             null,
             $this->isStateless(),
