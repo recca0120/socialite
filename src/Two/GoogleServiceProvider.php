@@ -57,6 +57,7 @@ class GoogleServiceProvider extends ProviderFactory
         $service = $this->getService();
         if ($this->storage->hasAccessToken($service->service()) === true) {
             $token = $this->storage->retrieveAccessToken($service->service());
+
             if ($token->isExpired() === true) {
                 $token = $service->refreshAccessToken($token);
             }

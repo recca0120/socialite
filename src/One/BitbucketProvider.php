@@ -31,7 +31,7 @@ class BitbucketProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token = '')
+    protected function getUserByToken($token = '', $secret = '')
     {
         $service = $this->getService();
         $url = '/user';

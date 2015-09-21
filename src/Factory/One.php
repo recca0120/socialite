@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 abstract class One extends Provider implements ProviderContract
 {
+    public function __construct($driver, $config, Request $request = null)
+    {
+        parent::__construct($driver, $config, $request);
+        $this->verifierToken();
+    }
     /**
      * Redirect the user to the authentication page for the provider.
      *
@@ -34,9 +39,18 @@ abstract class One extends Provider implements ProviderContract
         $token = $this->getToken();
         $accessToken = $token->getAccessToken();
         $accessTokenSecret = $token->getAccessTokenSecret();
-        $user = $this->mapUserToObject($this->getUserByToken());
-
+        $user = $this->mapUserToObject($this->getUserByToken($accessToken, $accessTokenSecret));
         return $user->setToken($accessToken, $accessTokenSecret);
+    }
+
+    protected function verifierToken() {
+        if ($this->hasNecessaryVerifier() === true) {
+            $service = $this->getService();
+            $token = $this->storage->retrieveAccessToken($service->service());
+            $oAuthToken = $this->request->get('oauth_token');
+            $oAuthVerifier = $this->request->get('oauth_verifier');
+            $service->requestAccessToken($oAuthToken, $oAuthVerifier, $token->getRequestTokenSecret());
+        }
     }
 
     /**
@@ -48,11 +62,6 @@ abstract class One extends Provider implements ProviderContract
     {
         $service = $this->getService();
         $token = $this->storage->retrieveAccessToken($service->service());
-        $oauthToken = $this->request->get('oauth_token');
-        $oauthVerifier = $this->request->get('oauth_verifier');
-        if (empty($oauthToken) === false) {
-            $token = $service->requestAccessToken($oauthToken, $oauthVerifier, $token->getRequestTokenSecret());
-        }
 
         return $token;
     }
@@ -71,4 +80,12 @@ abstract class One extends Provider implements ProviderContract
     {
         return $this->request->has('oauth_token') && $this->request->has('oauth_verifier');
     }
+
+    /**
+     * Get the raw user for the given access token.
+     *
+     * @param  string  $token
+     * @return array
+     */
+    abstract protected function getUserByToken($token = '', $secret = '');
 }

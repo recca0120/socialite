@@ -1,6 +1,6 @@
 <?php
 
-namespace Recca0120\Socialite\Two;
+namespace Recca0120\Socialite\One;
 
 use Recca0120\Socialite\AbstractUser;
 

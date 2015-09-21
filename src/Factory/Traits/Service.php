@@ -12,7 +12,8 @@ use OAuth\Common\Storage\SymfonySession as Storage;
 use OAuth\ServiceFactory;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
 use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage as SymfonyFileHandler;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage as SymfonySessionHandler;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage as SymfonyNativeSessionHandler;
+use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage as SymfonyPhpBridgeSessionHandler;
 
 trait Service
 {
@@ -76,7 +77,11 @@ trait Service
         } else {
             $session = $this->request->getSession();
             if ($session === null) {
-                $handler = new SymfonySessionHandler;
+                if (session_status() == PHP_SESSION_NONE) {
+                    $handler = new SymfonyNativeSessionHandler;
+                } else {
+                    $handler = new SymfonyPhpBridgeSessionHandler;
+                }
                 $session = new SymfonySession($handler);
                 $session->start();
                 $this->registerShutdown();

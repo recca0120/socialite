@@ -78,4 +78,12 @@ abstract class Two extends Provider implements ProviderContract
     {
         return new User;
     }
+
+    /**
+     * Get the raw user for the given access token.
+     *
+     * @param  string  $token
+     * @return array
+     */
+    abstract protected function getUserByToken($token = '');
 }

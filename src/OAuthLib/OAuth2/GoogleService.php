@@ -84,7 +84,7 @@ class GoogleService extends Google
      */
     public function refreshAccessToken(TokenInterface $token)
     {
-        return $this->requestAccessToken();
+        return $this->requestAccessToken('');
     }
 
     protected function generateAssertion()

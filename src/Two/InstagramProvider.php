@@ -23,8 +23,8 @@ class InstagramProvider extends ProviderFactory
     {
         $map = [
             'id' => array_get($user, 'data.id'),
-            'nickname' => array_get($user, 'login'),
-            'name' => array_get($user, 'data.name'),
+            'nickname' => array_get($user, 'data.username'),
+            'name' => array_get($user, 'data.full_name'),
             'email' => null,
             'avatar' => array_get($user, 'data.profile_picture'),
         ];

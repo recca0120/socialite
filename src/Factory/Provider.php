@@ -131,14 +131,6 @@ abstract class Provider implements ProviderContract
     }
 
     /**
-     * Get the raw user for the given access token.
-     *
-     * @param  string  $token
-     * @return array
-     */
-    abstract protected function getUserByToken($token = '');
-
-    /**
      * Map the raw user array to a Socialite User instance.
      *
      * @param  array  $user
