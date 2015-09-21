@@ -7,7 +7,7 @@ use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\Factory\Traits\Stateless;
 use Recca0120\Socialite\Two\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use OAuth\Common\Service\AbstractService;
 abstract class Two extends Provider implements ProviderContract
 {
     use Stateless;
@@ -51,17 +51,28 @@ abstract class Two extends Provider implements ProviderContract
     public function getAccessToken($code = '')
     {
         $service = $this->getService();
-        if (empty($code) === true) {
+        $parameters = array_merge([
+            'code' => $code,
+        ], $this->request->all());
+        $token = $this->verifyAccessToken($service, $parameters);
+        return $token->getAccessToken();
+
+    }
+
+    public function verifyAccessToken(AbstractService $service, array $parameters) {
+
+        $code = array_get($parameters, 'code');
+        if (empty($code) === false) {
+            $state = array_get($parameters, 'state');
+            $token = $service->requestAccessToken($code, $state);
+        } else {
             $token = $this->storage->retrieveAccessToken($service->service());
             // if ($token->isExpired() === true) {
             //     $this->getService()->refreshAccessToken($token);
             // }
-        } else {
-            $state = $this->request->input('state');
-            $token = $service->requestAccessToken($code, $state);
         }
 
-        return $token->getAccessToken();
+        return $token;
     }
 
     /**

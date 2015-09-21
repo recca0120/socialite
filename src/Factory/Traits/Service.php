@@ -102,12 +102,13 @@ trait Service
 
     protected function createService(ServiceFactory $serviceFactory, Credentials $credentials, $sessionId = null)
     {
-        return $serviceFactory->createService(
+        $service = $serviceFactory->createService(
             $this->driver,
             $credentials,
             $this->createStorage($sessionId),
             $this->scopes
         );
+        return $service;
     }
 
     public function __call($method, $parameters)

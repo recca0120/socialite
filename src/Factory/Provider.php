@@ -5,7 +5,15 @@ namespace Recca0120\Socialite\Factory;
 use Illuminate\Http\Request;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\Factory\Traits\Service;
-
+use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Http\Client\CurlClient;
+use OAuth\Common\Service\AbstractService;
+use OAuth\Common\Storage\SymfonySession as Storage;
+use OAuth\ServiceFactory;
+use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
+use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage as SymfonyFileHandler;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage as SymfonyNativeSessionHandler;
+use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage as SymfonyPhpBridgeSessionHandler;
 abstract class Provider implements ProviderContract
 {
     use Service;
@@ -59,11 +67,9 @@ abstract class Provider implements ProviderContract
     {
         $this->driver = $driver;
         $this->config = $config;
-
         if ($request === null) {
             $request = new Request;
         }
-
         $this->request = $request;
     }
 
@@ -137,4 +143,21 @@ abstract class Provider implements ProviderContract
      * @return \Recca0120\Socialite\User
      */
     abstract protected function mapUserToObject(array $user);
+
+    /**
+     * Get the access token for the given code.
+     *
+     * @param  string  $code
+     * @return string
+     */
+    abstract public function getAccessToken();
+
+    /**
+     * Get the access token for the given code.
+     *
+     * @param  string  $code
+     * @return string
+     */
+    abstract public function verifyAccessToken(AbstractService $service, array $parameters);
+
 }

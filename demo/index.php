@@ -8,10 +8,6 @@ use Recca0120\Socialite\SocialiteManager;
 
 session_start();
 
-function getNextDriver($currentDriver, $drivers) {
-
-}
-
 $request = Request::capture();
 $app = getApp($request);
 $drivers = getDrivers($app['config']);
@@ -19,8 +15,8 @@ $showUser = empty($_GET['show']) === false;
 // $driver = empty($_GET['next']) ? $drivers[0] : $_GET['next'];
 // dump($drivers);
 // OAuth1
-// $driver = 'bitbucket';
-$driver = 'twitter';
+$driver = 'bitbucket';
+// $driver = 'twitter';
 // OAuth2
 // $driver = 'facebook';
 // $driver = 'github';
@@ -41,8 +37,11 @@ if ($driver === 'googleservice') {
 } elseif ($showUser) {
     dump($socialite->service(), $socialite->user());
 } elseif (isset($_GET['oauth_token']) === true){
+    $socialite->getAccessToken();
+    // dump($socialite->user(), $_SESSION);
     header('location: '.$request->url().'?show=1');
 } elseif (isset($_GET['code']) === true) {
+    $socialite->getAccessToken();
     // dump($socialite->user(), $_SESSION);
     header('location: '.$request->url().'?show=1');
 } else {

@@ -6,14 +6,9 @@ use Illuminate\Http\Request;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\One\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+use OAuth\Common\Service\AbstractService;
 abstract class One extends Provider implements ProviderContract
 {
-    public function __construct($driver, $config, Request $request = null)
-    {
-        parent::__construct($driver, $config, $request);
-        $this->verifierToken();
-    }
     /**
      * Redirect the user to the authentication page for the provider.
      *
@@ -36,21 +31,11 @@ abstract class One extends Provider implements ProviderContract
      */
     public function user()
     {
-        $token = $this->getToken();
+        $token = $this->getAccessToken();
         $accessToken = $token->getAccessToken();
         $accessTokenSecret = $token->getAccessTokenSecret();
         $user = $this->mapUserToObject($this->getUserByToken($accessToken, $accessTokenSecret));
         return $user->setToken($accessToken, $accessTokenSecret);
-    }
-
-    protected function verifierToken() {
-        if ($this->hasNecessaryVerifier() === true) {
-            $service = $this->getService();
-            $token = $this->storage->retrieveAccessToken($service->service());
-            $oAuthToken = $this->request->get('oauth_token');
-            $oAuthVerifier = $this->request->get('oauth_verifier');
-            $service->requestAccessToken($oAuthToken, $oAuthVerifier, $token->getRequestTokenSecret());
-        }
     }
 
     /**
@@ -58,11 +43,24 @@ abstract class One extends Provider implements ProviderContract
      *
      * @return string
      */
-    public function getToken()
+    public function getAccessToken($oauthToken = '', $oauthVerifier = '')
     {
         $service = $this->getService();
-        $token = $this->storage->retrieveAccessToken($service->service());
+        $parameters = array_merge([
+            'oauth_token' => $oauthToken,
+            'oauth_verifier' => $oauthVerifier
+        ], $this->request->all());
+        $token = $this->verifyAccessToken($service, $parameters);
+        return $token;
+    }
 
+    public function verifyAccessToken(AbstractService $service, array $parameters) {
+        $token = $this->storage->retrieveAccessToken($service->service());
+        $oauthToken = array_get($parameters, 'oauth_token');
+        $oauthVerifier = array_get($parameters, 'oauth_verifier');
+        if (empty($oauthToken) === false && empty($oauthVerifier) === false) {
+            $token = $service->requestAccessToken($oauthToken, $oauthVerifier, $token->getRequestTokenSecret());
+        }
         return $token;
     }
 
