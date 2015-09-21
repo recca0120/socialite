@@ -13,6 +13,11 @@ return [
         'redirect' => '',
     ],
     // OAuth2
+    'dropbox' => [
+        'client_id' => '',
+        'client_secret' => '',
+        'redirect' => '',
+    ],
     'facebook' => [
         'client_id' => '',
         'client_secret' => '',
@@ -24,6 +29,11 @@ return [
         'redirect' => '',
     ],
     'google' => [
+        'client_id' => '',
+        'client_secret' => '',
+        'redirect' => '',
+    ],
+    'googleservice' => [
         'client_id' => '',
         'client_secret' => '',
         'redirect' => '',

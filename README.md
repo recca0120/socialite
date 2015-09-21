@@ -58,6 +58,7 @@ Included service implementations
     - BitBucket
     - Twitter
 - OAuth2
+    - Dropbox
     - Facebook
     - GitHub
     - Google

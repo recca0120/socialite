@@ -3,23 +3,20 @@
 namespace Recca0120\Socialite\Two;
 
 use OAuth\Common\Token\TokenInterface;
-use OAuth\OAuth2\Service\Instagram;
 use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
-class InstagramProvider extends ProviderFactory
+class DropboxProvider extends ProviderFactory
 {
-    protected $scopes = [
-        Instagram::SCOPE_BASIC,
-    ];
+    protected $scopes = [];
 
     protected function mapUserToObject(array $user)
     {
         $map = [
-            'id' => array_get($user, 'data.id'),
-            'nickname' => array_get($user, 'data.username'),
-            'name' => array_get($user, 'data.full_name'),
-            'email' => null,
-            'avatar' => array_get($user, 'data.profile_picture'),
+            'id' => array_get($user, 'uid'),
+            'nickname' => null,
+            'name' => array_get($user, 'display_name'),
+            'email' => array_get($user, 'email'),
+            'avatar' => null,
         ];
 
         return $this->getUserObject()->setRaw($user)->map($map);
@@ -28,7 +25,8 @@ class InstagramProvider extends ProviderFactory
     protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
-        $url = 'users/self';
+
+        $url = 'https://api.dropbox.com/1/account/info';
 
         $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
             // 'Accept' => 'application/json',

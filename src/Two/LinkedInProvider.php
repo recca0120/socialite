@@ -8,19 +8,11 @@ use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
 class LinkedInProvider extends ProviderFactory
 {
-    /**
-     * The scopes being requested.
-     *
-     * @var array
-     */
     protected $scopes = [
         Linkedin::SCOPE_R_BASICPROFILE,
         Linkedin::SCOPE_R_EMAILADDRESS,
     ];
 
-    /**
-     * {@inheritdoc}
-     */
     protected function mapUserToObject(array $user)
     {
         $map = [
@@ -35,9 +27,6 @@ class LinkedInProvider extends ProviderFactory
         return $this->getUserObject()->setRaw($user)->map($map);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
@@ -56,11 +45,10 @@ class LinkedInProvider extends ProviderFactory
         ];
         $url = 'https://api.linkedin.com/v1/people/~:('.implode(',', $fields).')';
 
-        $response = $service->request($url, 'GET', null, [
+        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
             // 'Accept' => 'application/json',
-            // 'Authorization' => 'Bearer '.$token,
             'x-li-format' => 'json',
-        ]);
+        ]));
 
         return json_decode($response, true);
     }

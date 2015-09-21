@@ -10,11 +10,6 @@ use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
 class FacebookProvider extends ProviderFactory
 {
-    /**
-     * The scopes being requested.
-     *
-     * @var array
-     */
     protected $scopes = [
         Facebook::SCOPE_PUBLIC_PROFILE,
         Facebook::SCOPE_EMAIL,
@@ -67,10 +62,9 @@ class FacebookProvider extends ProviderFactory
         $fields = ['first_name', 'last_name', 'name', 'email', 'gender', 'verified'];
         $url = '/me?fields='.implode(',', $fields);
 
-        $response = $service->request($url, 'GET', null, [
+        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
             // 'Accept' => 'application/json',
-            // 'Authorization' => 'Bearer '.$token,
-        ]);
+        ]));
 
         return json_decode($response, true);
     }

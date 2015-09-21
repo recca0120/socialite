@@ -20,17 +20,11 @@ class GoogleServiceProvider extends ProviderFactory
         return parent::createService($serviceFactory, $sessionId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function mapUserToObject(array $user)
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getUserByToken(TokenInterface $token)
     {
         return [];

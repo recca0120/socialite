@@ -89,4 +89,6 @@ abstract class Provider implements ProviderContract
     abstract public function getToken();
 
     abstract protected function getUserByToken(TokenInterface $token);
+
+    abstract protected function getAuthorizationHeader(TokenInterface $token, array $extraHeader = []);
 }

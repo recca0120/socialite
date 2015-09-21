@@ -12,15 +12,17 @@ class SocialiteServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = true;
+
     /**
      * Bootstrap any application services.
      */
-    public function boot()
-    {
-        $this->publishes([
-            __DIR__.'/../config/services.php' => config_path('services.php'),
-        ]);
-    }
+    // public function boot()
+    // {
+    //     $this->publishes([
+    //         __DIR__.'/../config/services.php' => config_path('services.php'),
+    //     ]);
+    // }
+
     /**
      * Register the service provider.
      *

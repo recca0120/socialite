@@ -10,11 +10,6 @@ use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
 class GoogleProvider extends ProviderFactory
 {
-    /**
-     * The scopes being requested.
-     *
-     * @var array
-     */
     protected $scopes = [
         Google::SCOPE_GPLUS_ME,
         Google::SCOPE_GPLUS_LOGIN,
@@ -36,9 +31,6 @@ class GoogleProvider extends ProviderFactory
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function mapUserToObject(array $user)
     {
         $map = [
@@ -52,17 +44,13 @@ class GoogleProvider extends ProviderFactory
         return $this->getUserObject()->setRaw($user)->map($map);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
         $url = 'https://www.googleapis.com/oauth2/v1/userinfo';
-        $response = $service->request($url, 'GET', null, [
+        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
             // 'Accept' => 'application/json',
-            // 'Authorization' => 'Bearer '.$token,
-        ]);
+        ]));
 
         return json_decode($response, true);
     }

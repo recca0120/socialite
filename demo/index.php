@@ -18,10 +18,11 @@ $showUser = empty($_GET['show']) === false;
 // $driver = 'bitbucket';
 // $driver = 'twitter';
 // OAuth2
+$driver = 'dropbox';
 // $driver = 'facebook';
 // $driver = 'github';
 // $driver = 'google';
-$driver = 'googleservice';
+// $driver = 'googleservice';
 // $driver = 'instagram';
 // $driver = 'linkedin';
 

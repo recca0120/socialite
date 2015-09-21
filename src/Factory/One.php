@@ -4,6 +4,7 @@ namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
 use OAuth\Common\Service\AbstractService;
+use OAuth\Common\Token\TokenInterface;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\One\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -66,5 +67,10 @@ abstract class One extends Provider implements ProviderContract
     protected function getUserObject()
     {
         return new User;
+    }
+
+    protected function getAuthorizationHeader(TokenInterface $token, array $extraHeader = [])
+    {
+        return $extraHeader;
     }
 }
