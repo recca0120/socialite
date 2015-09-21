@@ -3,17 +3,12 @@
 namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
+use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Service\AbstractService;
+use OAuth\Common\Token\TokenInterface;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\Factory\Traits\Service;
-use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Http\Client\CurlClient;
-use OAuth\Common\Service\AbstractService;
-use OAuth\Common\Storage\SymfonySession as Storage;
-use OAuth\ServiceFactory;
-use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage as SymfonyFileHandler;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage as SymfonyNativeSessionHandler;
-use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage as SymfonyPhpBridgeSessionHandler;
+
 abstract class Provider implements ProviderContract
 {
     use Service;
@@ -53,6 +48,8 @@ abstract class Provider implements ProviderContract
      */
     protected $scopes = [];
 
+    protected $credentials = null;
+
     /**
      * Create a new provider instance.
      *
@@ -71,6 +68,11 @@ abstract class Provider implements ProviderContract
             $request = new Request;
         }
         $this->request = $request;
+        $this->credentials = new Credentials(
+            array_get($this->config, 'client_id'),
+            array_get($this->config, 'client_secret'),
+            array_get($this->config, 'redirect')
+        );
     }
 
     /**
@@ -160,4 +162,19 @@ abstract class Provider implements ProviderContract
      */
     abstract public function verifyAccessToken(AbstractService $service, array $parameters);
 
+    /**
+     * Get the access token for the given code.
+     *
+     * @param  string  $code
+     * @return string
+     */
+    abstract public function getToken();
+
+    /**
+     * Get the raw user for the given access token.
+     *
+     * @param  string  $token
+     * @return array
+     */
+    abstract protected function getUserByToken(TokenInterface $token);
 }

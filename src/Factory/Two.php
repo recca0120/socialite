@@ -3,11 +3,12 @@
 namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
+use OAuth\Common\Service\AbstractService;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
 use Recca0120\Socialite\Factory\Traits\Stateless;
 use Recca0120\Socialite\Two\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use OAuth\Common\Service\AbstractService;
+
 abstract class Two extends Provider implements ProviderContract
 {
     use Stateless;
@@ -35,11 +36,10 @@ abstract class Two extends Provider implements ProviderContract
      */
     public function user()
     {
-        $code = $this->getCode();
-        $accessToken = $this->getAccessToken($code);
-        $user = $this->mapUserToObject($this->getUserByToken($accessToken));
+        $token = $this->getToken();
+        $user = $this->mapUserToObject($this->getUserByToken($token));
 
-        return $user->setToken($accessToken);
+        return $user->setToken($token->getAccessToken());
     }
 
     /**
@@ -50,26 +50,33 @@ abstract class Two extends Provider implements ProviderContract
      */
     public function getAccessToken($code = '')
     {
+        $token = $this->getToken($code);
+
+        return $token->getAccessToken();
+    }
+
+    public function getToken($code = '')
+    {
         $service = $this->getService();
         $parameters = array_merge([
             'code' => $code,
         ], $this->request->all());
         $token = $this->verifyAccessToken($service, $parameters);
-        return $token->getAccessToken();
 
+        return $token;
     }
 
-    public function verifyAccessToken(AbstractService $service, array $parameters) {
-
+    public function verifyAccessToken(AbstractService $service, array $parameters)
+    {
         $code = array_get($parameters, 'code');
         if (empty($code) === false) {
             $state = array_get($parameters, 'state');
             $token = $service->requestAccessToken($code, $state);
         } else {
             $token = $this->storage->retrieveAccessToken($service->service());
-            // if ($token->isExpired() === true) {
-            //     $this->getService()->refreshAccessToken($token);
-            // }
+            if ($token->isExpired() === true) {
+                $this->getService()->refreshAccessToken($token);
+            }
         }
 
         return $token;
@@ -89,12 +96,4 @@ abstract class Two extends Provider implements ProviderContract
     {
         return new User;
     }
-
-    /**
-     * Get the raw user for the given access token.
-     *
-     * @param  string  $token
-     * @return array
-     */
-    abstract protected function getUserByToken($token = '');
 }

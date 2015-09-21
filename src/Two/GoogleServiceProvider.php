@@ -2,73 +2,23 @@
 
 namespace Recca0120\Socialite\Two;
 
-use Illuminate\Http\Request;
 use OAuth\Common\Consumer\Credentials;
-use OAuth\Common\Storage\SymfonySession as Storage;
+use OAuth\Common\Token\TokenInterface;
 use OAuth\ServiceFactory;
 use Recca0120\Socialite\Factory\Two as ProviderFactory;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage as SessionStorage;
 
 class GoogleServiceProvider extends ProviderFactory
 {
-    /**
-     * Create a new provider instance.
-     *
-     * @param  string  $driver
-     * @param  Request  $request
-     * @param  string  $clientId
-     * @param  string  $clientSecret
-     * @param  string  $redirectUrl
-     * @return void
-     */
-    // protected function createStorage()
-    // {
-    //     $sessionId = md5(json_encode([$this->scopes, $this->config]));
-    //     $session = new Session(new SessionStorage);
-    //     $session->setId($sessionId);
-    //     $session->start();
-
-    //     $this->storage = new Storage($session);
-    //     $session = $this->storage->getSession();
-
-    //     return $this->storage;
-    // }
-
-    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials, $sessionId = null)
+    protected function createService(ServiceFactory $serviceFactory, $sessionId = null)
     {
         $serviceFactory->registerService('googleservice', '\Recca0120\Socialite\OAuthLib\OAuth2\GoogleService');
+
         $sessionId = [
-            $credentials,
+            $this->credentials,
             $this->scopes,
         ];
 
-        return parent::createService($serviceFactory, $credentials, $sessionId);
-    }
-
-    /**
-     * Get the access token for the given code.
-     *
-     * @param  string  $code
-     * @return string
-     */
-    public function getAccessToken($code = '')
-    {
-        $service = $this->getService();
-        if ($this->storage->hasAccessToken($service->service()) === true) {
-            $token = $this->storage->retrieveAccessToken($service->service());
-
-            if ($token->isExpired() === true) {
-                $token = $service->refreshAccessToken($token);
-            }
-
-            return $token->getAccessToken();
-        }
-
-        $state = $this->request->input('state');
-        $token = $service->requestAccessToken($code, $state);
-
-        return $token->getAccessToken();
+        return parent::createService($serviceFactory, $sessionId);
     }
 
     /**
@@ -82,7 +32,7 @@ class GoogleServiceProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token = '')
+    protected function getUserByToken(TokenInterface $token)
     {
         return [];
     }

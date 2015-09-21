@@ -2,6 +2,7 @@
 
 namespace Recca0120\Socialite\Two;
 
+use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Service\Instagram;
 use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
@@ -35,7 +36,7 @@ class InstagramProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token = '')
+    protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
         $url = 'users/self';

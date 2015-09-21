@@ -2,6 +2,7 @@
 
 namespace Recca0120\Socialite\Two;
 
+use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Service\GitHub;
 use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
@@ -36,7 +37,7 @@ class GithubProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token = '')
+    protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
         $url = 'user';

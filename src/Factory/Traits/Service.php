@@ -5,7 +5,7 @@ namespace Recca0120\Socialite\Factory\Traits;
 // use Illuminate\Filesystem\Filesystem;
 // use Illuminate\Session\FileSessionHandler;
 // use Illuminate\Session\Store as LaravelSession;
-use OAuth\Common\Consumer\Credentials;
+
 use OAuth\Common\Http\Client\CurlClient;
 use OAuth\Common\Service\AbstractService;
 use OAuth\Common\Storage\SymfonySession as Storage;
@@ -43,14 +43,7 @@ trait Service
                 ]);
             }
             $serviceFactory->setHttpClient($httpClient);
-
-            $credentials = new Credentials(
-                array_get($this->config, 'client_id'),
-                array_get($this->config, 'client_secret'),
-                array_get($this->config, 'redirect')
-            );
-
-            $this->service = $this->createService($serviceFactory, $credentials);
+            $this->service = $this->createService($serviceFactory);
         }
 
         return $this->service;
@@ -100,14 +93,15 @@ trait Service
         });
     }
 
-    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials, $sessionId = null)
+    protected function createService(ServiceFactory $serviceFactory, $sessionId = null)
     {
         $service = $serviceFactory->createService(
             $this->driver,
-            $credentials,
+            $this->credentials,
             $this->createStorage($sessionId),
             $this->scopes
         );
+
         return $service;
     }
 

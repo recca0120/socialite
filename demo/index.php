@@ -15,10 +15,10 @@ $showUser = empty($_GET['show']) === false;
 // $driver = empty($_GET['next']) ? $drivers[0] : $_GET['next'];
 // dump($drivers);
 // OAuth1
-$driver = 'bitbucket';
+// $driver = 'bitbucket';
 // $driver = 'twitter';
 // OAuth2
-// $driver = 'facebook';
+$driver = 'facebook';
 // $driver = 'github';
 // $driver = 'google';
 // $driver = 'googleservice';
@@ -31,12 +31,12 @@ $socialite = $socialiteManager
     ->stateless();
 
 if ($driver === 'googleservice') {
-    dump($socialite->service(), $socialite->scopes([
+    dump($socialite->scopes([
         'https://www.googleapis.com/auth/analytics.readonly',
     ])->getAccessToken());
 } elseif ($showUser) {
-    dump($socialite->service(), $socialite->user());
-} elseif (isset($_GET['oauth_token']) === true){
+    dump($socialite->user(), $socialite->service());
+} elseif (isset($_GET['oauth_token']) === true) {
     $socialite->getAccessToken();
     // dump($socialite->user(), $_SESSION);
     header('location: '.$request->url().'?show=1');

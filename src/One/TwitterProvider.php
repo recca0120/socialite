@@ -2,6 +2,7 @@
 
 namespace Recca0120\Socialite\One;
 
+use OAuth\Common\Token\TokenInterface;
 use Recca0120\Socialite\Factory\One as ProviderFactory;
 
 class TwitterProvider extends ProviderFactory
@@ -25,7 +26,7 @@ class TwitterProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token = '', $secret = '')
+    protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
         $url = '/account/verify_credentials.json?include_email=true';

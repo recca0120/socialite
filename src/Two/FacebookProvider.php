@@ -3,6 +3,7 @@
 namespace Recca0120\Socialite\Two;
 
 use OAuth\Common\Consumer\Credentials;
+use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Service\Facebook;
 use OAuth\ServiceFactory;
 use Recca0120\Socialite\Factory\Two as ProviderFactory;
@@ -23,13 +24,13 @@ class FacebookProvider extends ProviderFactory
 
     public $graphUrl = 'https://graph.facebook.com';
 
-    protected function createService(ServiceFactory $serviceFactory, Credentials $credentials, $sessionId = null)
+    protected function createService(ServiceFactory $serviceFactory, $sessionId = null)
     {
         $serviceFactory->registerService('facebook', '\Recca0120\Socialite\OAuthLib\OAuth2\Facebook');
 
         return $serviceFactory->createService(
             $this->driver,
-            $credentials,
+            $this->credentials,
             $this->createStorage($sessionId),
             $this->scopes,
             null,
@@ -60,7 +61,7 @@ class FacebookProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token = '')
+    protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
         $fields = ['first_name', 'last_name', 'name', 'email', 'gender', 'verified'];

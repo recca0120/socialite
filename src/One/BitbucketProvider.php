@@ -3,6 +3,7 @@
 namespace Recca0120\Socialite\One;
 
 use Illuminate\Http\Request;
+use OAuth\Common\Token\TokenInterface;
 use Recca0120\Socialite\Factory\One as ProviderFactory;
 
 class BitbucketProvider extends ProviderFactory
@@ -31,7 +32,7 @@ class BitbucketProvider extends ProviderFactory
     /**
      * {@inheritdoc}
      */
-    protected function getUserByToken($token = '', $secret = '')
+    protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
         $url = '/user';
