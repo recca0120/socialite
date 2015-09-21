@@ -69,7 +69,7 @@ abstract class Two extends Provider implements ProviderContract
     public function verifyAccessToken(AbstractService $service, array $parameters)
     {
         $code = array_get($parameters, 'code');
-        if (empty($code) === false) {
+        if (empty($code) === false || $this->storage->hasAccessToken($service->service()) === false) {
             $state = array_get($parameters, 'state');
             $token = $service->requestAccessToken($code, $state);
         } else {
