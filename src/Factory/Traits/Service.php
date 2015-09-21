@@ -92,9 +92,6 @@ trait Service
         register_shutdown_function(function () {
             $session = $this->storage->getSession();
             $session->save();
-            $included_files = get_included_files();
-            dump($included_files);
-            exit;
         });
     }
 
