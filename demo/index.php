@@ -7,16 +7,16 @@ use Illuminate\Http\Request;
 use Recca0120\Socialite\SocialiteManager;
 
 $request = Request::capture();
-$driver = 'github';
 // OAuth1
-$driver = 'bitbucket';
-$driver = 'twitter';
+// $driver = 'bitbucket';
+// $driver = 'twitter';
 // OAuth2
-$driver = 'facebook';
-$driver = 'github';
-$driver = 'google';
-$driver = 'instagram';
+// $driver = 'facebook';
+// $driver = 'github';
+// $driver = 'google';
+// $driver = 'instagram';
 $driver = 'linkedin';
+
 $app = getApp($request);
 
 $socialiteManager = new SocialiteManager($app);

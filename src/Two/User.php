@@ -1,8 +1,10 @@
 <?php
 
-namespace Recca0120\Socialite\Factory\User;
+namespace Recca0120\Socialite\Two;
 
-class Two extends AbstractUser
+use Recca0120\Socialite\AbstractUser;
+
+class User extends AbstractUser
 {
     /**
      * The user's access token.

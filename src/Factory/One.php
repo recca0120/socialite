@@ -4,7 +4,7 @@ namespace Recca0120\Socialite\Factory;
 
 use Illuminate\Http\Request;
 use Recca0120\Socialite\Contracts\Provider as ProviderContract;
-use Recca0120\Socialite\Factory\User\One as User;
+use Recca0120\Socialite\One\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 abstract class One extends Provider implements ProviderContract

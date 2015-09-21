@@ -1,6 +1,6 @@
 <?php
 
-namespace Recca0120\Socialite\Factory\User;
+namespace Recca0120\Socialite;
 
 use ArrayAccess;
 use Recca0120\Socialite\Contracts\User;
