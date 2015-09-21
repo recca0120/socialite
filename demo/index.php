@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../../../../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 require __DIR__.'/config.php';
 
 use Illuminate\Http\Request;
@@ -18,10 +18,10 @@ $showUser = empty($_GET['show']) === false;
 // $driver = 'bitbucket';
 // $driver = 'twitter';
 // OAuth2
-$driver = 'facebook';
+// $driver = 'facebook';
 // $driver = 'github';
 // $driver = 'google';
-// $driver = 'googleservice';
+$driver = 'googleservice';
 // $driver = 'instagram';
 // $driver = 'linkedin';
 

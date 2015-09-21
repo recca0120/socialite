@@ -13,11 +13,6 @@ abstract class Two extends Provider implements ProviderContract
 {
     use Stateless;
 
-    /**
-     * Redirect the user of the application to the provider's authentication screen.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function redirect()
     {
         $service = $this->getService();
@@ -31,9 +26,11 @@ abstract class Two extends Provider implements ProviderContract
         return new RedirectResponse($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    protected function getCode()
+    {
+        return $this->request->input('code');
+    }
+
     public function user()
     {
         $token = $this->getToken();
@@ -42,12 +39,6 @@ abstract class Two extends Provider implements ProviderContract
         return $user->setToken($token->getAccessToken());
     }
 
-    /**
-     * Get the access token for the given code.
-     *
-     * @param  string  $code
-     * @return string
-     */
     public function getAccessToken($code = '')
     {
         $token = $this->getToken($code);
@@ -80,16 +71,6 @@ abstract class Two extends Provider implements ProviderContract
         }
 
         return $token;
-    }
-
-    /**
-     * Get the code from the request.
-     *
-     * @return string
-     */
-    protected function getCode()
-    {
-        return $this->request->input('code');
     }
 
     protected function getUserObject()

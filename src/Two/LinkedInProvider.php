@@ -34,6 +34,7 @@ class LinkedInProvider extends ProviderFactory
 
         return $this->getUserObject()->setRaw($user)->map($map);
     }
+
     /**
      * {@inheritdoc}
      */

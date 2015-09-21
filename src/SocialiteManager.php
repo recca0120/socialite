@@ -41,6 +41,7 @@ class SocialiteManager extends Manager implements Contracts\Factory
         } else {
             $config = $this->app['config']['services.'.$driver];
             $request = array_get($this->app, 'request');
+
             return ProviderFactory::factory($driver, $config, $request);
         }
 

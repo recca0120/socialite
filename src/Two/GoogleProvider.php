@@ -59,7 +59,6 @@ class GoogleProvider extends ProviderFactory
     {
         $service = $this->getService();
         $url = 'https://www.googleapis.com/oauth2/v1/userinfo';
-
         $response = $service->request($url, 'GET', null, [
             // 'Accept' => 'application/json',
             // 'Authorization' => 'Bearer '.$token,

@@ -13,7 +13,8 @@
         "php": ">=5.4.0",
         "illuminate/http": "~5.0",
         "illuminate/support": "~5.0",
-        "lusitanian/oauth": "^0.5.4"
+        "lusitanian/oauth": "^0.5.4",
+        "illuminate/filesystem": "^5.2@dev"
     },
     "require-dev": {
         "symfony/var-dumper": "^2.7"

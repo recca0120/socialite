@@ -12,7 +12,6 @@ class GoogleServiceProvider extends ProviderFactory
     protected function createService(ServiceFactory $serviceFactory, $sessionId = null)
     {
         $serviceFactory->registerService('googleservice', '\Recca0120\Socialite\OAuthLib\OAuth2\GoogleService');
-
         $sessionId = [
             $this->credentials,
             $this->scopes,

@@ -2,33 +2,22 @@
 
 namespace Recca0120\Socialite\Factory\Traits;
 
-// use Illuminate\Filesystem\Filesystem;
-// use Illuminate\Session\FileSessionHandler;
-// use Illuminate\Session\Store as LaravelSession;
-
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Session\FileSessionHandler;
+use Illuminate\Session\Store as LaravelSession;
 use OAuth\Common\Http\Client\CurlClient;
 use OAuth\Common\Service\AbstractService;
 use OAuth\Common\Storage\SymfonySession as Storage;
 use OAuth\ServiceFactory;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
-use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage as SymfonyFileHandler;
+// use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage as SymfonyFileHandler;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage as SymfonyNativeSessionHandler;
 use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage as SymfonyPhpBridgeSessionHandler;
 
 trait Service
 {
-    /**
-     * The Storage.
-     *
-     * @var Storage
-     */
     protected $storage;
 
-    /**
-     * The scopes being requested.
-     *
-     * @var Service
-     */
     protected $service = null;
 
     public function getService()
@@ -52,18 +41,21 @@ trait Service
     protected function createStorage($sessionId = null)
     {
         if ($sessionId !== null) {
+            // $name = '/Google_Client';
+            // $path = session_save_path().'/'.$name;
             $name = 'Recca0120Socialite';
-            $sessionId = sha1(serialize($sessionId));
             $path = sys_get_temp_dir().'/'.$name;
-            // $name = 'Recca0120Socialite';
-            // $file = new Filesystem;
-            // $path = session_save_path();
-            // $handler = new FileSessionHandler($file, $path);
-            // $session = new LaravelSession($name, $handler, $sessionId);
-            // $session->start();
-            // $this->registerShutdown();
-            $handler = new SymfonyFileHandler($path);
-            $session = new SymfonySession($handler);
+
+            $sessionId = sha1(serialize($sessionId));
+            $file = new Filesystem;
+            if ($file->isDirectory($path) === false) {
+                $file->makeDirectory($path, 0755, true);
+            }
+
+            $handler = new FileSessionHandler($file, $path);
+            $session = new LaravelSession($name, $handler, $sessionId);
+            // $handler = new SymfonyFileHandler($path);
+            // $session = new SymfonySession($handler);
             $session->setId($sessionId);
             $session->start();
             $this->registerShutdown();

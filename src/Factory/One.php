@@ -10,11 +10,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 abstract class One extends Provider implements ProviderContract
 {
-    /**
-     * Redirect the user to the authentication page for the provider.
-     *
-     * @return RedirectResponse
-     */
     public function redirect()
     {
         $service = $this->getService();
@@ -27,9 +22,6 @@ abstract class One extends Provider implements ProviderContract
         return new RedirectResponse($url);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function user()
     {
         $token = $this->getToken();
@@ -40,11 +32,6 @@ abstract class One extends Provider implements ProviderContract
         return $user->setToken($accessToken, $accessTokenSecret);
     }
 
-    /**
-     * Get the access token for the given code.
-     *
-     * @return string
-     */
     public function getAccessToken($oauthToken = '', $oauthVerifier = '')
     {
         $this->getToken($oauthToken, $oauthVerifier);
