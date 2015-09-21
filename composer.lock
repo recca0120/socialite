@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e25b9538409748f7839a7c15ce48a4da",
-    "content-hash": "05d51f8f6d841f1682977f452aaeb6f9",
+    "hash": "497c1b0df2b74aa5169daf02c1d189e9",
+    "content-hash": "bec9690d798ab759bb8cc741ba5d54e8",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -132,16 +132,16 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "5.1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "c3299e00a695e7d846790d5de007355a96cebc90"
+                "reference": "854d3a6021f3dcda1f5624d0e33ebf2c2ab6e3e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/c3299e00a695e7d846790d5de007355a96cebc90",
-                "reference": "c3299e00a695e7d846790d5de007355a96cebc90",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/854d3a6021f3dcda1f5624d0e33ebf2c2ab6e3e5",
+                "reference": "854d3a6021f3dcda1f5624d0e33ebf2c2ab6e3e5",
                 "shasum": ""
             },
             "require": {
@@ -150,7 +150,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -170,27 +170,27 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "http://laravel.com",
-            "time": "2015-08-31 12:59:22"
+            "time": "2015-09-17 15:05:48"
         },
         {
             "name": "illuminate/filesystem",
-            "version": "5.1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
-                "reference": "2cd81653614e3feb443914dd9f49b980cef36b85"
+                "reference": "ec1df445cdd1e07599028321eac444b14e8a8879"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/2cd81653614e3feb443914dd9f49b980cef36b85",
-                "reference": "2cd81653614e3feb443914dd9f49b980cef36b85",
+                "url": "https://api.github.com/repos/illuminate/filesystem/zipball/ec1df445cdd1e07599028321eac444b14e8a8879",
+                "reference": "ec1df445cdd1e07599028321eac444b14e8a8879",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "5.1.*",
-                "illuminate/support": "5.1.*",
+                "illuminate/contracts": "5.2.*",
+                "illuminate/support": "5.2.*",
                 "php": ">=5.5.9",
-                "symfony/finder": "2.7.*"
+                "symfony/finder": "3.0.*"
             },
             "suggest": {
                 "league/flysystem": "Required to use the Flysystem local and FTP drivers (~1.0).",
@@ -200,7 +200,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -220,33 +220,33 @@
             ],
             "description": "The Illuminate Filesystem package.",
             "homepage": "http://laravel.com",
-            "time": "2015-08-24 08:44:48"
+            "time": "2015-08-28 12:40:38"
         },
         {
             "name": "illuminate/http",
-            "version": "5.1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/http.git",
-                "reference": "ad2b8e306ec54f1b2bb15214d645d00273c0c199"
+                "reference": "c401fdcb48335efe128ead63882a128e79db4863"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/http/zipball/ad2b8e306ec54f1b2bb15214d645d00273c0c199",
-                "reference": "ad2b8e306ec54f1b2bb15214d645d00273c0c199",
+                "url": "https://api.github.com/repos/illuminate/http/zipball/c401fdcb48335efe128ead63882a128e79db4863",
+                "reference": "c401fdcb48335efe128ead63882a128e79db4863",
                 "shasum": ""
             },
             "require": {
-                "illuminate/session": "5.1.*",
-                "illuminate/support": "5.1.*",
+                "illuminate/session": "5.2.*",
+                "illuminate/support": "5.2.*",
                 "php": ">=5.5.9",
-                "symfony/http-foundation": "2.7.*",
-                "symfony/http-kernel": "2.7.*"
+                "symfony/http-foundation": "3.0.*",
+                "symfony/http-kernel": "3.0.*"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -266,37 +266,37 @@
             ],
             "description": "The Illuminate Http package.",
             "homepage": "http://laravel.com",
-            "time": "2015-08-01 00:02:33"
+            "time": "2015-08-01 01:46:57"
         },
         {
             "name": "illuminate/session",
-            "version": "5.1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/session.git",
-                "reference": "6b8b337c9495493cb1f56e7aa7bdc20645ce0905"
+                "reference": "dbe50e148e3bc8e41ddbf78e9e7cc75f213cf435"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/session/zipball/6b8b337c9495493cb1f56e7aa7bdc20645ce0905",
-                "reference": "6b8b337c9495493cb1f56e7aa7bdc20645ce0905",
+                "url": "https://api.github.com/repos/illuminate/session/zipball/dbe50e148e3bc8e41ddbf78e9e7cc75f213cf435",
+                "reference": "dbe50e148e3bc8e41ddbf78e9e7cc75f213cf435",
                 "shasum": ""
             },
             "require": {
-                "illuminate/contracts": "5.1.*",
-                "illuminate/support": "5.1.*",
-                "nesbot/carbon": "~1.19",
+                "illuminate/contracts": "5.2.*",
+                "illuminate/support": "5.2.*",
+                "nesbot/carbon": "~1.20",
                 "php": ">=5.5.9",
-                "symfony/finder": "2.7.*",
-                "symfony/http-foundation": "2.7.*"
+                "symfony/finder": "3.0.*",
+                "symfony/http-foundation": "3.0.*"
             },
             "suggest": {
-                "illuminate/console": "Required to use the session:table command (5.1.*)."
+                "illuminate/console": "Required to use the session:table command (5.2.*)."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -316,37 +316,37 @@
             ],
             "description": "The Illuminate Session package.",
             "homepage": "http://laravel.com",
-            "time": "2015-09-16 10:00:03"
+            "time": "2015-09-16 16:57:30"
         },
         {
             "name": "illuminate/support",
-            "version": "5.1.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "59f58668d19167a0a473e65d00bf09e1ec131f19"
+                "reference": "a868dba60dd510d5872bd6b464c2d7e3e5038ba6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/59f58668d19167a0a473e65d00bf09e1ec131f19",
-                "reference": "59f58668d19167a0a473e65d00bf09e1ec131f19",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/a868dba60dd510d5872bd6b464c2d7e3e5038ba6",
+                "reference": "a868dba60dd510d5872bd6b464c2d7e3e5038ba6",
                 "shasum": ""
             },
             "require": {
                 "danielstjules/stringy": "~1.8",
                 "doctrine/inflector": "~1.0",
                 "ext-mbstring": "*",
-                "illuminate/contracts": "5.1.*",
+                "illuminate/contracts": "5.2.*",
                 "php": ">=5.5.9"
             },
             "suggest": {
                 "jeremeamia/superclosure": "Required to be able to serialize closures (~2.0).",
-                "symfony/var-dumper": "Required to use the dd function (2.7.*)."
+                "symfony/var-dumper": "Required to use the dd function (3.0.*)."
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.1-dev"
+                    "dev-master": "5.2-dev"
                 }
             },
             "autoload": {
@@ -369,7 +369,7 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "http://laravel.com",
-            "time": "2015-09-14 08:50:28"
+            "time": "2015-09-15 13:49:17"
         },
         {
             "name": "lusitanian/oauth",
@@ -533,34 +533,34 @@
         },
         {
             "name": "symfony/debug",
-            "version": "2.8.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Debug.git",
-                "reference": "795e333a070c564dde1ac55dff8f774b2970b2b2"
+                "reference": "cf9a1c029aa3672b04a8f569e762681fed898482"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Debug/zipball/795e333a070c564dde1ac55dff8f774b2970b2b2",
-                "reference": "795e333a070c564dde1ac55dff8f774b2970b2b2",
+                "url": "https://api.github.com/repos/symfony/Debug/zipball/cf9a1c029aa3672b04a8f569e762681fed898482",
+                "reference": "cf9a1c029aa3672b04a8f569e762681fed898482",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9",
+                "php": ">=5.5.9",
                 "psr/log": "~1.0"
             },
             "conflict": {
                 "symfony/http-kernel": ">=2.3,<2.3.24|~2.4.0|>=2.5,<2.5.9|>=2.6,<2.6.2"
             },
             "require-dev": {
-                "symfony/class-loader": "~2.2|~3.0.0",
-                "symfony/http-kernel": "~2.3.24|~2.5.9|~2.6,>=2.6.2|~3.0.0",
-                "symfony/phpunit-bridge": "~2.7|~3.0.0"
+                "symfony/class-loader": "~2.8|~3.0",
+                "symfony/http-kernel": "~2.8|~3.0",
+                "symfony/phpunit-bridge": "~2.8|~3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -584,32 +584,32 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-14 14:15:17"
+            "time": "2015-09-14 14:15:24"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "2.8.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "e79162fa079bb559ddad17c58cf8b7ecbaffd9b6"
+                "reference": "10133cee322c79d3d4efdc0269eddc5e5c93d76e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/e79162fa079bb559ddad17c58cf8b7ecbaffd9b6",
-                "reference": "e79162fa079bb559ddad17c58cf8b7ecbaffd9b6",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/10133cee322c79d3d4efdc0269eddc5e5c93d76e",
+                "reference": "10133cee322c79d3d4efdc0269eddc5e5c93d76e",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": ">=5.5.9"
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.0,>=2.0.5|~3.0.0",
-                "symfony/dependency-injection": "~2.6|~3.0.0",
-                "symfony/expression-language": "~2.6|~3.0.0",
-                "symfony/phpunit-bridge": "~2.7|~3.0.0",
-                "symfony/stopwatch": "~2.3|~3.0.0"
+                "symfony/config": "~2.8|~3.0",
+                "symfony/dependency-injection": "~2.8|~3.0",
+                "symfony/expression-language": "~2.8|~3.0",
+                "symfony/phpunit-bridge": "~2.8|~3.0",
+                "symfony/stopwatch": "~2.8|~3.0"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -618,7 +618,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -642,32 +642,32 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-14 06:10:06"
+            "time": "2015-09-14 14:15:24"
         },
         {
             "name": "symfony/finder",
-            "version": "2.7.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder.git",
-                "reference": "8262ab605973afbb3ef74b945daabf086f58366f"
+                "reference": "417363162e45dc8066a33e9df426b42920472866"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/8262ab605973afbb3ef74b945daabf086f58366f",
-                "reference": "8262ab605973afbb3ef74b945daabf086f58366f",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/417363162e45dc8066a33e9df426b42920472866",
+                "reference": "417363162e45dc8066a33e9df426b42920472866",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": ">=5.5.9"
             },
             "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/phpunit-bridge": "~2.8|~3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -691,33 +691,33 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-19 19:59:23"
+            "time": "2015-09-19 20:03:10"
         },
         {
             "name": "symfony/http-foundation",
-            "version": "2.7.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "7a161de4d6e61953129f6f1a12ffaf452a66f616"
+                "reference": "508a1578ba61a2b833e6cff7eb8b32346a7b7391"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/7a161de4d6e61953129f6f1a12ffaf452a66f616",
-                "reference": "7a161de4d6e61953129f6f1a12ffaf452a66f616",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/508a1578ba61a2b833e6cff7eb8b32346a7b7391",
+                "reference": "508a1578ba61a2b833e6cff7eb8b32346a7b7391",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": ">=5.5.9"
             },
             "require-dev": {
-                "symfony/expression-language": "~2.4",
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/expression-language": "~2.8|~3.0",
+                "symfony/phpunit-bridge": "~2.8|~3.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -744,49 +744,49 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-14 14:14:09"
+            "time": "2015-09-14 14:15:24"
         },
         {
             "name": "symfony/http-kernel",
-            "version": "2.7.x-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpKernel.git",
-                "reference": "b54cd36cccc1a01cc57d1ef6bedf15137c6f6b46"
+                "reference": "3ee0f16ae6b5d6aa65f2bb8c9e44c14415306267"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/b54cd36cccc1a01cc57d1ef6bedf15137c6f6b46",
-                "reference": "b54cd36cccc1a01cc57d1ef6bedf15137c6f6b46",
+                "url": "https://api.github.com/repos/symfony/HttpKernel/zipball/3ee0f16ae6b5d6aa65f2bb8c9e44c14415306267",
+                "reference": "3ee0f16ae6b5d6aa65f2bb8c9e44c14415306267",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9",
+                "php": ">=5.5.9",
                 "psr/log": "~1.0",
-                "symfony/debug": "~2.6,>=2.6.2",
-                "symfony/event-dispatcher": "~2.6,>=2.6.7",
-                "symfony/http-foundation": "~2.5,>=2.5.4"
+                "symfony/debug": "~2.8|~3.0",
+                "symfony/event-dispatcher": "~2.8|~3.0",
+                "symfony/http-foundation": "~2.8|~3.0"
             },
             "conflict": {
-                "symfony/config": "<2.7"
+                "symfony/config": "<2.8"
             },
             "require-dev": {
-                "symfony/browser-kit": "~2.3",
-                "symfony/class-loader": "~2.1",
-                "symfony/config": "~2.7",
-                "symfony/console": "~2.3",
-                "symfony/css-selector": "~2.0,>=2.0.5",
-                "symfony/dependency-injection": "~2.2",
-                "symfony/dom-crawler": "~2.0,>=2.0.5",
-                "symfony/expression-language": "~2.4",
-                "symfony/finder": "~2.0,>=2.0.5",
-                "symfony/phpunit-bridge": "~2.7",
-                "symfony/process": "~2.0,>=2.0.5",
-                "symfony/routing": "~2.2",
-                "symfony/stopwatch": "~2.3",
-                "symfony/templating": "~2.2",
-                "symfony/translation": "~2.0,>=2.0.5",
-                "symfony/var-dumper": "~2.6"
+                "symfony/browser-kit": "~2.8|~3.0",
+                "symfony/class-loader": "~2.8|~3.0",
+                "symfony/config": "~2.8|~3.0",
+                "symfony/console": "~2.8|~3.0",
+                "symfony/css-selector": "~2.8|~3.0",
+                "symfony/dependency-injection": "~2.8|~3.0",
+                "symfony/dom-crawler": "~2.8|~3.0",
+                "symfony/expression-language": "~2.8|~3.0",
+                "symfony/finder": "~2.8|~3.0",
+                "symfony/phpunit-bridge": "~2.8|~3.0",
+                "symfony/process": "~2.8|~3.0",
+                "symfony/routing": "~2.8|~3.0",
+                "symfony/stopwatch": "~2.8|~3.0",
+                "symfony/templating": "~2.8|~3.0",
+                "symfony/translation": "~2.8|~3.0",
+                "symfony/var-dumper": "~2.8|~3.0"
             },
             "suggest": {
                 "symfony/browser-kit": "",
@@ -800,7 +800,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -824,7 +824,7 @@
             ],
             "description": "Symfony HttpKernel Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-14 14:14:09"
+            "time": "2015-09-15 08:57:39"
         },
         {
             "name": "symfony/translation",
