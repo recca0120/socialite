@@ -18,8 +18,8 @@ $showUser = empty($_GET['show']) === false;
 // $driver = 'bitbucket';
 // $driver = 'twitter';
 // OAuth2
-$driver = 'dropbox';
-// $driver = 'facebook';
+// $driver = 'dropbox';
+$driver = 'facebook';
 // $driver = 'github';
 // $driver = 'google';
 // $driver = 'googleservice';
@@ -28,8 +28,8 @@ $driver = 'dropbox';
 
 $socialiteManager = new SocialiteManager($app);
 $socialite = $socialiteManager
-    ->driver($driver)
-    ->stateless();
+    ->driver($driver);
+    // ->stateless();
 
 if ($driver === 'googleservice') {
     dump($socialite->scopes([
@@ -38,15 +38,17 @@ if ($driver === 'googleservice') {
 } elseif ($showUser) {
     dump($socialite->user(), $socialite->service());
 } elseif (isset($_GET['oauth_token']) === true) {
-    $socialite->getAccessToken();
-    // dump($socialite->user(), $_SESSION);
-    header('location: '.$request->url().'?show=1');
+    // $socialite->getAccessToken();
+    // header('location: '.$request->url().'?show=1');
+    dump($socialite->user(), $_SESSION);
 } elseif (isset($_GET['code']) === true) {
-    $socialite->getAccessToken();
-    // dump($socialite->user(), $_SESSION);
-    header('location: '.$request->url().'?show=1');
+    // $socialite->getAccessToken();
+    // header('location: '.$request->url().'?show=1');
+    dump($socialite->user(), $_SESSION);
 } else {
-    $response = $socialite->with([
-    ])->redirect();
+    // $socialite->with([
+    // ]);
+
+    $response = $socialite->stateless()->redirect();
     $response->send();
 }

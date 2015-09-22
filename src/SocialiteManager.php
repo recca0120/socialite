@@ -4,7 +4,7 @@ namespace Recca0120\Socialite;
 
 use Illuminate\Support\Manager;
 use InvalidArgumentException;
-use Recca0120\Socialite\Factory\Provider as ProviderFactory;
+use Recca0120\Socialite\Common\Service;
 
 class SocialiteManager extends Manager implements Contracts\Factory
 {
@@ -42,7 +42,7 @@ class SocialiteManager extends Manager implements Contracts\Factory
             $config = $this->app['config']['services.'.$driver];
             $request = array_get($this->app, 'request');
 
-            return ProviderFactory::factory($driver, $config, $request);
+            return Service::factory($driver, $config, $request);
         }
 
         throw new InvalidArgumentException("Driver [$driver] not supported.");

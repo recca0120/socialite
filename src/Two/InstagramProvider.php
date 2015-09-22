@@ -4,9 +4,8 @@ namespace Recca0120\Socialite\Two;
 
 use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Service\Instagram;
-use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
-class InstagramProvider extends ProviderFactory
+class InstagramProvider extends AbstractService
 {
     protected $scopes = [
         Instagram::SCOPE_BASIC,
@@ -22,7 +21,7 @@ class InstagramProvider extends ProviderFactory
             'avatar' => array_get($user, 'data.profile_picture'),
         ];
 
-        return $this->getUserObject()->setRaw($user)->map($map);
+        return with(new User)->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)
@@ -30,9 +29,8 @@ class InstagramProvider extends ProviderFactory
         $service = $this->getService();
         $url = 'users/self';
 
-        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
-            // 'Accept' => 'application/json',
-        ]));
+        $response = $service->request($url, 'GET', null, [
+        ]);
 
         return json_decode($response, true);
     }

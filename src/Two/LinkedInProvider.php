@@ -4,9 +4,8 @@ namespace Recca0120\Socialite\Two;
 
 use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Service\Linkedin;
-use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
-class LinkedInProvider extends ProviderFactory
+class LinkedInProvider extends AbstractService
 {
     protected $scopes = [
         Linkedin::SCOPE_R_BASICPROFILE,
@@ -24,7 +23,7 @@ class LinkedInProvider extends ProviderFactory
             'avatar_original' => array_get($user, 'pictureUrls.values.0'),
         ];
 
-        return $this->getUserObject()->setRaw($user)->map($map);
+        return with(new User)->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)
@@ -45,10 +44,9 @@ class LinkedInProvider extends ProviderFactory
         ];
         $url = 'https://api.linkedin.com/v1/people/~:('.implode(',', $fields).')';
 
-        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
-            // 'Accept' => 'application/json',
+        $response = $service->request($url, 'GET', null, [
             'x-li-format' => 'json',
-        ]));
+        ]);
 
         return json_decode($response, true);
     }

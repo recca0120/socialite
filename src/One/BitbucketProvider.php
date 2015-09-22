@@ -4,9 +4,8 @@ namespace Recca0120\Socialite\One;
 
 use Illuminate\Http\Request;
 use OAuth\Common\Token\TokenInterface;
-use Recca0120\Socialite\Factory\One as ProviderFactory;
 
-class BitbucketProvider extends ProviderFactory
+class BitbucketProvider extends AbstractService
 {
     protected function mapUserToObject(array $user)
     {
@@ -20,10 +19,9 @@ class BitbucketProvider extends ProviderFactory
             'name' => array_get($user, 'user.display_name'),
             'email' => array_get($user, 'emails.0.email'),
             'avatar' => array_get($user, 'user.avatar'),
-
         ];
 
-        return $this->getUserObject()->setRaw($user)->map($map);
+        return with(new User)->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)
@@ -31,9 +29,7 @@ class BitbucketProvider extends ProviderFactory
         $service = $this->getService();
         $url = '/user';
 
-        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
-            // 'Accept' => 'application/json',
-        ]));
+        $response = $service->request($url, 'GET', null);
 
         return json_decode($response, true);
     }

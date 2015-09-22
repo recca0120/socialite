@@ -3,9 +3,8 @@
 namespace Recca0120\Socialite\Two;
 
 use OAuth\Common\Token\TokenInterface;
-use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
-class DropboxProvider extends ProviderFactory
+class DropboxProvider extends AbstractService
 {
     protected $scopes = [];
 
@@ -19,18 +18,15 @@ class DropboxProvider extends ProviderFactory
             'avatar' => null,
         ];
 
-        return $this->getUserObject()->setRaw($user)->map($map);
+        return with(new User)->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
-
         $url = 'https://api.dropbox.com/1/account/info';
-
-        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
-            // 'Accept' => 'application/json',
-        ]));
+        $response = $service->request($url, 'GET', null, [
+        ]);
 
         return json_decode($response, true);
     }

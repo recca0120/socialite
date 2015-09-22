@@ -3,9 +3,8 @@
 namespace Recca0120\Socialite\One;
 
 use OAuth\Common\Token\TokenInterface;
-use Recca0120\Socialite\Factory\One as ProviderFactory;
 
-class TwitterProvider extends ProviderFactory
+class TwitterProvider extends AbstractService
 {
     protected function mapUserToObject(array $user)
     {
@@ -17,7 +16,7 @@ class TwitterProvider extends ProviderFactory
             'avatar' => array_get($user, 'profile_image_url'),
         ];
 
-        return $this->getUserObject()->setRaw($user)->map($map);
+        return with(new User)->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)
@@ -25,9 +24,7 @@ class TwitterProvider extends ProviderFactory
         $service = $this->getService();
         $url = '/account/verify_credentials.json?include_email=true';
 
-        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
-            // 'Accept' => 'application/json',
-        ]));
+        $response = $service->request($url, 'GET', null);
 
         return json_decode($response, true);
     }

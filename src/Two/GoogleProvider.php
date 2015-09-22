@@ -2,34 +2,16 @@
 
 namespace Recca0120\Socialite\Two;
 
-use OAuth\Common\Consumer\Credentials;
 use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Service\Google;
-use OAuth\ServiceFactory;
-use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
-class GoogleProvider extends ProviderFactory
+class GoogleProvider extends AbstractService
 {
     protected $scopes = [
         Google::SCOPE_GPLUS_ME,
         Google::SCOPE_GPLUS_LOGIN,
         Google::SCOPE_EMAIL,
     ];
-
-    public $version = '';
-
-    protected function createService(ServiceFactory $serviceFactory, $sessionId = null)
-    {
-        return $serviceFactory->createService(
-            $this->driver,
-            $this->credentials,
-            $this->createStorage($sessionId),
-            $this->scopes,
-            null,
-            $this->isStateless(),
-            array_get($this->config, 'version', $this->version)
-        );
-    }
 
     protected function mapUserToObject(array $user)
     {
@@ -41,16 +23,15 @@ class GoogleProvider extends ProviderFactory
             'avatar' => array_get($user, 'picture'),
         ];
 
-        return $this->getUserObject()->setRaw($user)->map($map);
+        return with(new User)->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
         $url = 'https://www.googleapis.com/oauth2/v1/userinfo';
-        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
-            // 'Accept' => 'application/json',
-        ]));
+        $response = $service->request($url, 'GET', null, [
+        ]);
 
         return json_decode($response, true);
     }

@@ -4,9 +4,8 @@ namespace Recca0120\Socialite\Two;
 
 use OAuth\Common\Token\TokenInterface;
 use OAuth\OAuth2\Service\GitHub;
-use Recca0120\Socialite\Factory\Two as ProviderFactory;
 
-class GithubProvider extends ProviderFactory
+class GithubProvider extends AbstractService
 {
     protected $scopes = [
         // GitHub::SCOPE_USER,
@@ -23,17 +22,15 @@ class GithubProvider extends ProviderFactory
             'avatar' => array_get($user, 'avatar_url'),
         ];
 
-        return $this->getUserObject()->setRaw($user)->map($map);
+        return with(new User)->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)
     {
         $service = $this->getService();
         $url = 'user';
-
-        $response = $service->request($url, 'GET', null, $this->getAuthorizationHeader($token, [
-            // 'Accept' => 'application/json',
-        ]));
+        $response = $service->request($url, 'GET', null, [
+        ]);
 
         return json_decode($response, true);
     }
