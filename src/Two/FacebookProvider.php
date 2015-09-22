@@ -40,10 +40,9 @@ class FacebookProvider extends AbstractService
 
     protected function getUserByToken(TokenInterface $token)
     {
-        $service = $this->getService();
         $fields = ['first_name', 'last_name', 'name', 'email', 'gender', 'verified'];
         $url = '/me?fields='.implode(',', $fields);
-        $response = $service->request($url, 'GET', null, [
+        $response = $this->request($url, 'GET', null, [
         ]);
 
         return json_decode($response, true);

@@ -162,15 +162,13 @@ abstract class Service implements ProviderContract
 
     public static function factory($driver, $config, Request $request = null)
     {
-        $classOne = '\\Recca0120\\Socialite\\One\\'.ucfirst($driver).'Provider';
-        $classTwo = '\\Recca0120\\Socialite\\Two\\'.ucfirst($driver).'Provider';
-
-        if (class_exists($classTwo) === true) {
-            return new $classTwo($driver, $config, $request);
-        } elseif (class_exists($classOne) === true) {
-            return new $classOne($driver, $config, $request);
-        } else {
-            return new static($driver, $config, $request);
+        $provider = ucfirst($driver).'Provider';
+        $classFormat = '\\Recca0120\\Socialite\\%s\\'.ucfirst($driver).'Provider';
+        foreach (['One', 'Two'] as $namespace) {
+            $class = sprintf($classFormat, $namespace);
+            if (class_exists($class) === true) {
+                return new $class($driver, $config, $request);
+            }
         }
     }
 
@@ -188,9 +186,36 @@ abstract class Service implements ProviderContract
 
     public function getToken()
     {
+        return $token = $service->getStorage()->retrieveAccessToken($this->getServiceName());
+    }
+
+    public function request($path, $method = 'GET', $body = null, array $extraHeaders = [])
+    {
         $service = $this->getService();
 
-        return $token = $service->getStorage()->retrieveAccessToken($service->service());
+        return $service->request($path, $method, $body, $extraHeaders);
+    }
+
+    public function getServiceName()
+    {
+        return $service = $this->getService()->service();
+    }
+
+    public function getStorage()
+    {
+        return $this->getService()->getStorage();
+    }
+
+    public function hasAccessToken()
+    {
+        return $this->getStorage()->hasAccessToken($this->getServiceName());
+    }
+
+    public function retrieveAccessToken()
+    {
+        $token = $this->getStorage()->retrieveAccessToken($this->getServiceName());
+
+        return $token;
     }
 
     abstract public function redirect();

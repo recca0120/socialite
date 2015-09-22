@@ -13,7 +13,18 @@ class GoogleServiceProvider extends AbstractService
 
     protected function getSessionId()
     {
-        return [__CLASS__, __FILE__];
+        return [__CLASS__, __DIR__, __FILE__];
+    }
+
+    public function getAccessToken()
+    {
+        if ($this->hasAccessToken() === false) {
+            $token = $this->verifyToken();
+        } else {
+            $token = $this->retrieveAccessToken();
+        }
+
+        return $token->getAccessToken();
     }
 
     protected function mapUserToObject(array $user)

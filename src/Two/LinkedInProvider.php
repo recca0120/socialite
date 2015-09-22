@@ -28,7 +28,6 @@ class LinkedInProvider extends AbstractService
 
     protected function getUserByToken(TokenInterface $token)
     {
-        $service = $this->getService();
         $fields = [
             'id',
             'first-name',
@@ -44,7 +43,7 @@ class LinkedInProvider extends AbstractService
         ];
         $url = 'https://api.linkedin.com/v1/people/~:('.implode(',', $fields).')';
 
-        $response = $service->request($url, 'GET', null, [
+        $response = $this->request($url, 'GET', null, [
             'x-li-format' => 'json',
         ]);
 

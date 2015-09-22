@@ -10,9 +10,9 @@ abstract class AbstractService extends Service
     public function redirect()
     {
         $service = $this->getService();
-        $token = $service->requestRequestToken();
+        $requestToken = $service->requestRequestToken();
         $url = $service->getAuthorizationUri(array_merge([
-            'oauth_token' => $token->getRequestToken(),
+            'oauth_token' => $requestToken->getRequestToken(),
         ], $this->parameters))->getAbsoluteUri();
 
         return new RedirectResponse($url);
@@ -31,7 +31,7 @@ abstract class AbstractService extends Service
     protected function verifyToken()
     {
         $service = $this->getService();
-        $token = $service->getStorage()->retrieveAccessToken($service->service());
+        $token = $this->getStorage()->retrieveAccessToken($this->getServiceName());
         $oauthToken = $this->request->input('oauth_token');
         $oauthVerifier = $this->request->input('oauth_verifier');
         $token = $service->requestAccessToken($oauthToken, $oauthVerifier, $token->getRequestTokenSecret());

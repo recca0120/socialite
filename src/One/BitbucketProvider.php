@@ -9,9 +9,7 @@ class BitbucketProvider extends AbstractService
 {
     protected function mapUserToObject(array $user)
     {
-        $service = $this->getService();
-
-        $user['emails'] = json_decode($service->request('/users/'.array_get($user, 'user.username').'/emails'), true);
+        $user['emails'] = json_decode($this->request('/users/'.array_get($user, 'user.username').'/emails'), true);
 
         $map = [
             'id' => array_get($user, 'user.username'),
@@ -26,10 +24,9 @@ class BitbucketProvider extends AbstractService
 
     protected function getUserByToken(TokenInterface $token)
     {
-        $service = $this->getService();
         $url = '/user';
-
-        $response = $service->request($url, 'GET', null);
+        $response = $this->request($url, 'GET', null, [
+        ]);
 
         return json_decode($response, true);
     }

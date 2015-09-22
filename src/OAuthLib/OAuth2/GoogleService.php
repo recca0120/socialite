@@ -2,6 +2,8 @@
 
 namespace Recca0120\Socialite\OAuthLib\OAuth2;
 
+use Firebase\JWT\JWT;
+use InvalidArgumentException;
 use OAuth\Common\Consumer\CredentialsInterface;
 use OAuth\Common\Http\Client\ClientInterface;
 use OAuth\Common\Http\Uri\UriInterface;
@@ -36,28 +38,15 @@ class GoogleService extends Google
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, $stateParameterInAutUrl, $apiVersion);
 
-        $serviceAccountName = $this->credentials->getConsumerId();
         $privateKey = file_get_contents($this->credentials->getConsumerSecret());
-        $privateKeyPassword = 'notasecret';
-        $assertionType = 'http://oauth.net/grant_type/jwt/1.0/bearer';
-        $sub = false;
-        $useCache = true;
-
-        $this->serviceAccountName = $serviceAccountName;
-        // $this->scopes = implode($this->getScopesDelimiter(), $this->scopes);
-        $this->privateKey = $privateKey;
-        $this->privateKeyPassword = $privateKeyPassword;
-        $this->assertionType = $assertionType;
-        $this->sub = $sub;
-        $this->prn = $sub;
-        $this->useCache = $useCache;
+        $this->privateKey = $this->getPrivateKey($privateKey, 'notasecret');
     }
 
     public function requestAccessToken($code, $state = null)
     {
         $bodyParams = [
             'grant_type' => 'assertion',
-            'assertion_type' => $this->assertionType,
+            'assertion_type' => 'http://oauth.net/grant_type/jwt/1.0/bearer',
             'assertion' => $this->generateAssertion(),
         ];
 
@@ -73,15 +62,6 @@ class GoogleService extends Google
         return $token;
     }
 
-    /**
-     * Refreshes an OAuth2 access token.
-     *
-     * @param TokenInterface $token
-     *
-     * @return TokenInterface $token
-     *
-     * @throws MissingRefreshTokenException
-     */
     public function refreshAccessToken(TokenInterface $token)
     {
         return $this->requestAccessToken('');
@@ -90,57 +70,35 @@ class GoogleService extends Google
     protected function generateAssertion()
     {
         $now = time();
-
-        $jwtParams = [
+        $payload = [
             'aud' => $this->getAccessTokenEndpoint()->getAbsoluteUri(),
             'scope' => implode($this->getScopesDelimiter(), $this->scopes),
             'iat' => $now,
             'exp' => $now + self::MAX_TOKEN_LIFETIME_SECS,
-            'iss' => $this->serviceAccountName,
+            'iss' => $this->credentials->getConsumerId(),
         ];
 
-        if ($this->sub !== false) {
+        $sub = false;
+        $prn = $sub;
+
+        if ($sub !== false) {
             $jwtParams['sub'] = $this->sub;
-        } elseif ($this->prn !== false) {
+        } elseif ($prn !== false) {
             $jwtParams['prn'] = $this->prn;
         }
 
-        return $this->makeSignedJwt($jwtParams);
+        return JWT::encode($payload, $this->privateKey, 'RS256');
     }
 
-    /**
-     * Creates a signed JWT.
-     * @param array $payload
-     * @return string The signed JWT.
-     */
-    private function makeSignedJwt($payload)
-    {
-        $header = ['typ' => 'JWT', 'alg' => 'RS256'];
-
-        $payload = json_encode($payload);
-
-        // Handle some overzealous escaping in PHP json that seemed to cause some errors
-        // with claimsets.
-        $payload = str_replace('\/', '/', $payload);
-
-        $segments = [
-            static::urlSafeB64Encode(json_encode($header)),
-            static::urlSafeB64Encode($payload),
-        ];
-        $signingInput = implode('.', $segments);
-        $signature = static::p12Sign($this->privateKey, $this->privateKeyPassword, $signingInput);
-        $segments[] = static::urlSafeB64Encode($signature);
-
-        return implode('.', $segments);
-    }
-
-    public static function p12Sign($p12, $password, $data)
+    // Creates a new signer from a .p12 file.
+    public function getPrivateKey($p12, $password)
     {
         if (! function_exists('openssl_x509_read')) {
-            throw new \Exception(
-                'The Google PHP API library needs the openssl PHP extension'
+            throw new InvalidArgumentException(
+                'The library needs the openssl PHP extension'
             );
         }
+
         // If the private key is provided directly, then this isn't in the p12
         // format. Different versions of openssl support different p12 formats
         // and the key from google wasn't being accepted by the version available
@@ -153,7 +111,7 @@ class GoogleService extends Google
             // This throws on error
             $certs = [];
             if (! openssl_pkcs12_read($p12, $certs, $password)) {
-                throw new \Exception(
+                throw new InvalidArgumentException(
                     'Unable to parse the p12 file.  '.
                     'Is this a .p12 file?  Is the password correct?  OpenSSL error: '.
                     openssl_error_string()
@@ -162,49 +120,22 @@ class GoogleService extends Google
             // TODO(beaton): is this part of the contract for the openssl_pkcs12_read
             // method?  What happens if there are multiple private keys?  Do we care?
             if (! array_key_exists('pkey', $certs) || ! $certs['pkey']) {
-                throw new \Exception('No private key found in p12 file.');
+                throw new InvalidArgumentException('No private key found in p12 file.');
             }
             $privateKey = openssl_pkey_get_private($certs['pkey']);
         }
+
         if (! $privateKey) {
-            throw new \Exception('Unable to load private key');
+            throw new InvalidArgumentException('Unable to load private key');
         }
 
-        if (version_compare(PHP_VERSION, '5.3.0') < 0) {
-            static::freeOpensslPkey($privateKey);
-            throw new \Exception(
-                'PHP 5.3.0 or higher is required to use service accounts.'
-            );
-        }
-        $hash = defined('OPENSSL_ALGO_SHA256') ? OPENSSL_ALGO_SHA256 : 'sha256';
-        if (! openssl_sign($data, $signature, $privateKey, $hash)) {
-            static::freeOpensslPkey($privateKey);
-            throw new \Exception('Unable to sign data');
-        }
-        static::freeOpensslPkey($privateKey);
-
-        return $signature;
+        return $privateKey;
     }
 
-    public static function freeOpensslPkey($privateKey)
+    public function __destruct()
     {
-        if ($privateKey) {
-            openssl_pkey_free($privateKey);
+        if ($this->privateKey) {
+            openssl_pkey_free($this->privateKey);
         }
-    }
-
-    public static function urlSafeB64Encode($data)
-    {
-        $b64 = base64_encode($data);
-        $b64 = str_replace(['+', '/', '\r', '\n', '='], ['-', '_'], $b64);
-
-        return $b64;
-    }
-
-    public static function urlSafeB64Decode($b64)
-    {
-        $b64 = str_replace(['-', '_'], ['+', '/'], $b64);
-
-        return base64_decode($b64);
     }
 }

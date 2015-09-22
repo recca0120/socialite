@@ -23,9 +23,8 @@ class DropboxProvider extends AbstractService
 
     protected function getUserByToken(TokenInterface $token)
     {
-        $service = $this->getService();
         $url = 'https://api.dropbox.com/1/account/info';
-        $response = $service->request($url, 'GET', null, [
+        $response = $this->request($url, 'GET', null, [
         ]);
 
         return json_decode($response, true);

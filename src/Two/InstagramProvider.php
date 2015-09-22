@@ -26,10 +26,8 @@ class InstagramProvider extends AbstractService
 
     protected function getUserByToken(TokenInterface $token)
     {
-        $service = $this->getService();
         $url = 'users/self';
-
-        $response = $service->request($url, 'GET', null, [
+        $response = $this->request($url, 'GET', null, [
         ]);
 
         return json_decode($response, true);

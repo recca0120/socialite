@@ -62,16 +62,31 @@ abstract class AbstractService extends Service
         return $user->setToken($token->getAccessToken());
     }
 
-    protected function verifyToken()
+    protected function verifyToken($parameters = [])
     {
         $service = $this->getService();
-        $state = $this->request->input('state');
-        $code = $this->request->input('code');
+        $code = '';
+        $state = null;
+        if (isset($parameters['code']) === true) {
+            $code = $parameters['code'];
+        } else {
+            $state = $this->request->input('state');
+            $code = $this->request->input('code');
+        }
+
         $token = $service->requestAccessToken($code, $state);
 
         return $token;
     }
 
+    public function getAccessToken($code)
+    {
+        $token = $this->verifyToken([
+            'code' => $code,
+        ]);
+
+        return $token->getAccessToken();
+    }
     // public function getAccessToken()
     // {
     //     return $service = $this->getService()->requestAccessToken(null, null);

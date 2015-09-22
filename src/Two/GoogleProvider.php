@@ -28,9 +28,8 @@ class GoogleProvider extends AbstractService
 
     protected function getUserByToken(TokenInterface $token)
     {
-        $service = $this->getService();
         $url = 'https://www.googleapis.com/oauth2/v1/userinfo';
-        $response = $service->request($url, 'GET', null, [
+        $response = $this->request($url, 'GET', null, [
         ]);
 
         return json_decode($response, true);
