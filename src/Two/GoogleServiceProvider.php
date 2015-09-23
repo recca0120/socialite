@@ -16,7 +16,7 @@ class GoogleServiceProvider extends AbstractService
         return [__CLASS__, __DIR__, __FILE__];
     }
 
-    public function getAccessToken()
+    public function getAccessToken($code = '')
     {
         if ($this->hasAccessToken() === false) {
             $token = $this->verifyToken();
