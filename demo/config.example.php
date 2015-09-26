@@ -37,7 +37,8 @@ function getApp($request)
         ],
         'googleservice' => [
             'client_id' => '',
-            'client_secret' => __DIR__.'/path_to.p12',
+            'client_secret' => 'path/to/p12',
+            // 'client_secret' => 'path/to/json',
             'redirect' => '',
         ],
         'instagram' => [
