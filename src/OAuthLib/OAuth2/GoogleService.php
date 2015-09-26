@@ -38,8 +38,21 @@ class GoogleService extends Google
     ) {
         parent::__construct($credentials, $httpClient, $storage, $scopes, $baseApiUri, $stateParameterInAutUrl, $apiVersion);
 
-        $privateKey = file_get_contents($this->credentials->getConsumerSecret());
-        $this->privateKey = $this->getPrivateKey($privateKey, 'notasecret');
+        $consumerSecret = $this->credentials->getConsumerSecret();
+        if (is_file($consumerSecret) === true) {
+            $extension = substr($consumerSecret, strrpos($consumerSecret, '.') + 1);
+            $privateyKey = file_get_contents($consumerSecret);
+            switch ($extension) {
+                case 'p12':
+                    $this->privateKey = $this->getPrivateKeyFromPKCS12($privateyKey, 'notasecret');
+                    break;
+                case 'json':
+                    $this->privateKey = json_decode($privateyKey, true)['private_key'];
+                    break;
+            }
+        } else {
+            $this->privateKey = $consumerSecret;
+        }
     }
 
     public function requestAccessToken($code, $state = null)
@@ -91,7 +104,7 @@ class GoogleService extends Google
     }
 
     // Creates a new signer from a .p12 file.
-    public function getPrivateKey($p12, $password)
+    public function getPrivateKeyFromPKCS12($p12, $password)
     {
         if (! function_exists('openssl_x509_read')) {
             throw new InvalidArgumentException(
@@ -129,13 +142,9 @@ class GoogleService extends Google
             throw new InvalidArgumentException('Unable to load private key');
         }
 
-        return $privateKey;
-    }
+        $out = openssl_pkey_get_details($privateKey);
+        openssl_pkey_free($privateKey);
 
-    public function __destruct()
-    {
-        if ($this->privateKey) {
-            openssl_pkey_free($this->privateKey);
-        }
+        return $out['key'];
     }
 }
