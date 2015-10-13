@@ -12,7 +12,7 @@ class FacebookProvider extends AbstractService
         Facebook::SCOPE_EMAIL,
     ];
 
-    public $apiVersion = 'v2.4';
+    public $apiVersion = 'v2.5';
 
     public $graphUrl = 'https://graph.facebook.com';
 
@@ -29,7 +29,7 @@ class FacebookProvider extends AbstractService
             'name' => array_get($user, 'name'),
             'email' => array_get($user, 'email'),
         ];
-        $map['avatar'] = $this->graphUrl.'/'.$this->version.'/'.array_get($user, 'id', 'me').'/picture';
+        $map['avatar'] = $this->graphUrl.'/'.$this->apiVersion.'/'.array_get($user, 'id', 'me').'/picture';
         $map['avatar_original'] = $map['avatar'].'?width=1920';
         if (empty($map['name']) == true) {
             $map['name'] = array_get($user, 'first_name').' '.array_get($user, 'last_name');

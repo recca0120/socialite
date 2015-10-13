@@ -72,7 +72,7 @@ abstract class Service implements ProviderContract
             if (function_exists('curl_version') === true) {
                 $httpClient = new CurlClient;
                 $httpClient->setCurlParameters([
-                    CURLOPT_CAINFO => __DIR__.'/../../cert/ca-bundle.crt',
+                    CURLOPT_CAINFO => __DIR__.'/../../cert/cacert.pem',
                 ]);
             }
             static::$serviceFactory->setHttpClient($httpClient);
