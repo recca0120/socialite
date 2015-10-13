@@ -83,13 +83,15 @@ abstract class Service implements ProviderContract
 
     protected function createService($serviceFactory, $sessionId)
     {
+        $this->config['version'] = array_get($this->config, 'version', $this->apiVersion);
+
         return $serviceFactory->createService(
             $this->driver,
             $this->credentials,
             $this->createStorage($sessionId),
             $this->scopes,
             null,
-            array_get($this->config, 'version', $this->apiVersion)
+            array_get($this->config, 'version')
         );
     }
 
