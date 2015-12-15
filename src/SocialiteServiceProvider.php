@@ -30,7 +30,7 @@ class SocialiteServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bindShared('Recca0120\Socialite\Contracts\Factory', function ($app) {
+        $this->app->singleton('Recca0120\Socialite\Contracts\Factory', function ($app) {
             return new SocialiteManager($app);
         });
     }
