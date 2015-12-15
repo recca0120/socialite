@@ -18,7 +18,9 @@
         "firebase/php-jwt": "~3.0.0"
     },
     "require-dev": {
-        "symfony/var-dumper": "^2.7"
+        "nesbot/carbon": "~1.20",
+        "mockery/mockery": "~0.9.2",
+        "phpunit/phpunit": "~4.1"
     },
     "autoload": {
         "psr-4": {

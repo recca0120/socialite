@@ -11,14 +11,14 @@ class DropboxProvider extends AbstractService
     protected function mapUserToObject(array $user)
     {
         $map = [
-            'id' => array_get($user, 'uid'),
+            'id'       => array_get($user, 'uid'),
             'nickname' => null,
-            'name' => array_get($user, 'display_name'),
-            'email' => array_get($user, 'email'),
-            'avatar' => null,
+            'name'     => array_get($user, 'display_name'),
+            'email'    => array_get($user, 'email'),
+            'avatar'   => null,
         ];
 
-        return with(new User)->setRaw($user)->map($map);
+        return with(new User())->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)

@@ -12,14 +12,14 @@ class BitbucketProvider extends AbstractService
         $user['emails'] = json_decode($this->request('/users/'.array_get($user, 'user.username').'/emails'), true);
 
         $map = [
-            'id' => array_get($user, 'user.username'),
+            'id'       => array_get($user, 'user.username'),
             'nickname' => array_get($user, 'user.username'),
-            'name' => array_get($user, 'user.display_name'),
-            'email' => array_get($user, 'emails.0.email'),
-            'avatar' => array_get($user, 'user.avatar'),
+            'name'     => array_get($user, 'user.display_name'),
+            'email'    => array_get($user, 'emails.0.email'),
+            'avatar'   => array_get($user, 'user.avatar'),
         ];
 
-        return with(new User)->setRaw($user)->map($map);
+        return with(new User())->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)

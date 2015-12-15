@@ -1,7 +1,8 @@
-/backup
 /vendor
+/resources/assets/vendor
 /node_modules
-demo/config.php
-demo/*.json
-demo/*.p12
+composer.phar
 composer.lock
+.php_cs.cache
+.DS_Store
+Thumbs.db

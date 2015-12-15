@@ -4,7 +4,7 @@ namespace Recca0120\Socialite\Two;
 
 use OAuth\Common\Token\TokenInterface;
 
-class GoogleServiceProvider extends AbstractService
+class GoogleserviceProvider extends AbstractService
 {
     public function registerService()
     {

@@ -17,7 +17,7 @@ abstract class AbstractService extends Service
 
     public function isStateless()
     {
-        return ! $this->stateless;
+        return !$this->stateless;
     }
 
     public function stateless()
@@ -87,6 +87,7 @@ abstract class AbstractService extends Service
 
         return $token->getAccessToken();
     }
+
     // public function getAccessToken()
     // {
     //     return $service = $this->getService()->requestAccessToken(null, null);
