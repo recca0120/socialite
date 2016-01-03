@@ -46,7 +46,7 @@ abstract class Service implements ProviderContract
         $this->driver = $driver;
 
         if ($request === null) {
-            $request = new Request;
+            $request = new Request();
         }
         $this->request = $request;
 
@@ -67,10 +67,10 @@ abstract class Service implements ProviderContract
     protected function getServiceFactory()
     {
         if ((static::$serviceFactory instanceof ServiceFactory) === false) {
-            static::$serviceFactory = new ServiceFactory;
+            static::$serviceFactory = new ServiceFactory();
             $httpClient = null;
             if (function_exists('curl_version') === true) {
-                $httpClient = new CurlClient;
+                $httpClient = new CurlClient();
                 $httpClient->setCurlParameters([
                     CURLOPT_CAINFO => __DIR__.'/../../cert/cacert.pem',
                 ]);
@@ -119,7 +119,7 @@ abstract class Service implements ProviderContract
             $path = sys_get_temp_dir().'/'.$name;
 
             $sessionId = sha1(serialize($sessionId));
-            $file = new Filesystem;
+            $file = new Filesystem();
             if ($file->isDirectory($path) === false) {
                 $file->makeDirectory($path, 0755, true);
             }
@@ -137,9 +137,9 @@ abstract class Service implements ProviderContract
                 $session = $this->request->getSession();
                 if ($session === null) {
                     if (session_status() == PHP_SESSION_NONE) {
-                        $handler = new SymfonyNativeSessionHandler;
+                        $handler = new SymfonyNativeSessionHandler();
                     } else {
-                        $handler = new SymfonyPhpBridgeSessionHandler;
+                        $handler = new SymfonyPhpBridgeSessionHandler();
                     }
                     $session = new SymfonySession($handler);
                     $session->start();

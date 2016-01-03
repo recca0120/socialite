@@ -15,15 +15,15 @@ class LinkedInProvider extends AbstractService
     protected function mapUserToObject(array $user)
     {
         $map = [
-            'id' => array_get($user, 'id'),
-            'nickname' => null,
-            'name' => array_get($user, 'formattedName'),
-            'email' => array_get($user, 'emailAddress'),
-            'avatar' => array_get($user, 'pictureUrl'),
+            'id'              => array_get($user, 'id'),
+            'nickname'        => null,
+            'name'            => array_get($user, 'formattedName'),
+            'email'           => array_get($user, 'emailAddress'),
+            'avatar'          => array_get($user, 'pictureUrl'),
             'avatar_original' => array_get($user, 'pictureUrls.values.0'),
         ];
 
-        return with(new User)->setRaw($user)->map($map);
+        return with(new User())->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)

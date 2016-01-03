@@ -14,14 +14,14 @@ class InstagramProvider extends AbstractService
     protected function mapUserToObject(array $user)
     {
         $map = [
-            'id' => array_get($user, 'data.id'),
+            'id'       => array_get($user, 'data.id'),
             'nickname' => array_get($user, 'data.username'),
-            'name' => array_get($user, 'data.full_name'),
-            'email' => null,
-            'avatar' => array_get($user, 'data.profile_picture'),
+            'name'     => array_get($user, 'data.full_name'),
+            'email'    => null,
+            'avatar'   => array_get($user, 'data.profile_picture'),
         ];
 
-        return with(new User)->setRaw($user)->map($map);
+        return with(new User())->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)

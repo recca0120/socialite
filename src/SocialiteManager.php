@@ -11,7 +11,8 @@ class SocialiteManager extends Manager implements Contracts\Factory
     /**
      * Get a driver instance.
      *
-     * @param  string  $driver
+     * @param string $driver
+     *
      * @return mixed
      */
     public function with($driver)
@@ -22,10 +23,11 @@ class SocialiteManager extends Manager implements Contracts\Factory
     /**
      * Create a new driver instance.
      *
-     * @param  string  $driver
-     * @return mixed
+     * @param string $driver
      *
      * @throws \InvalidArgumentException
+     *
+     * @return mixed
      */
     protected function createDriver($driver)
     {

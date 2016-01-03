@@ -3,49 +3,49 @@
 return [
     // OAuth1
     'bitbucket' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
     'twitter' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
     // OAuth2
     'dropbox' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
     'facebook' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
     'github' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
     'google' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
     'googleservice' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
     'instagram' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
     'linkedin' => [
-        'client_id' => '',
+        'client_id'     => '',
         'client_secret' => '',
-        'redirect' => '',
+        'redirect'      => '',
     ],
 ];
