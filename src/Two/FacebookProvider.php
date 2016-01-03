@@ -24,10 +24,10 @@ class FacebookProvider extends AbstractService
     protected function mapUserToObject(array $user)
     {
         $map = [
-            'id' => array_get($user, 'id'),
+            'id'       => array_get($user, 'id'),
             'nickname' => array_get($user, 'nickname'),
-            'name' => array_get($user, 'name'),
-            'email' => array_get($user, 'email'),
+            'name'     => array_get($user, 'name'),
+            'email'    => array_get($user, 'email'),
         ];
         $map['avatar'] = $this->graphUrl.'/'.array_get($this->config, 'version').'/'.array_get($user, 'id', 'me').'/picture';
         $map['avatar_original'] = $map['avatar'].'?width=1920';
@@ -35,7 +35,7 @@ class FacebookProvider extends AbstractService
             $map['name'] = array_get($user, 'first_name').' '.array_get($user, 'last_name');
         }
 
-        return with(new User)->setRaw($user)->map($map);
+        return with(new User())->setRaw($user)->map($map);
     }
 
     protected function getUserByToken(TokenInterface $token)

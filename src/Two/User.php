@@ -16,7 +16,8 @@ class User extends AbstractUser
     /**
      * Set the token on the user.
      *
-     * @param  string  $token
+     * @param string $token
+     *
      * @return $this
      */
     public function setToken($token)

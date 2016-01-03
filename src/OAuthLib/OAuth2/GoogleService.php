@@ -22,7 +22,7 @@ class GoogleService extends Google
      * @param TokenStorageInterface $storage
      * @param array                 $scopes
      * @param UriInterface|null     $baseApiUri
-     * @param bool $stateParameterInAutUrl
+     * @param bool                  $stateParameterInAutUrl
      * @param string                $apiVersion
      *
      * @throws InvalidScopeException
@@ -58,9 +58,9 @@ class GoogleService extends Google
     public function requestAccessToken($code, $state = null)
     {
         $bodyParams = [
-            'grant_type' => 'assertion',
+            'grant_type'     => 'assertion',
             'assertion_type' => 'http://oauth.net/grant_type/jwt/1.0/bearer',
-            'assertion' => $this->generateAssertion(),
+            'assertion'      => $this->generateAssertion(),
         ];
 
         $responseBody = $this->httpClient->retrieveResponse(
@@ -84,11 +84,11 @@ class GoogleService extends Google
     {
         $now = time();
         $payload = [
-            'aud' => $this->getAccessTokenEndpoint()->getAbsoluteUri(),
+            'aud'   => $this->getAccessTokenEndpoint()->getAbsoluteUri(),
             'scope' => implode($this->getScopesDelimiter(), $this->scopes),
-            'iat' => $now,
-            'exp' => $now + self::MAX_TOKEN_LIFETIME_SECS,
-            'iss' => $this->credentials->getConsumerId(),
+            'iat'   => $now,
+            'exp'   => $now + self::MAX_TOKEN_LIFETIME_SECS,
+            'iss'   => $this->credentials->getConsumerId(),
         ];
 
         $sub = false;
@@ -104,9 +104,10 @@ class GoogleService extends Google
     }
 
     // Creates a new signer from a .p12 file.
+
     public function getPrivateKeyFromPKCS12($p12, $password)
     {
-        if (! function_exists('openssl_x509_read')) {
+        if (!function_exists('openssl_x509_read')) {
             throw new InvalidArgumentException(
                 'The library needs the openssl PHP extension'
             );
@@ -116,14 +117,14 @@ class GoogleService extends Google
         // format. Different versions of openssl support different p12 formats
         // and the key from google wasn't being accepted by the version available
         // at the time.
-        if (! $password && strpos($p12, '-----BEGIN RSA PRIVATE KEY-----') !== false) {
+        if (!$password && strpos($p12, '-----BEGIN RSA PRIVATE KEY-----') !== false) {
             $privateKey = openssl_pkey_get_private($p12);
         } elseif ($password === 'notasecret' && strpos($p12, '-----BEGIN PRIVATE KEY-----') !== false) {
             $privateKey = openssl_pkey_get_private($p12);
         } else {
             // This throws on error
             $certs = [];
-            if (! openssl_pkcs12_read($p12, $certs, $password)) {
+            if (!openssl_pkcs12_read($p12, $certs, $password)) {
                 throw new InvalidArgumentException(
                     'Unable to parse the p12 file.  '.
                     'Is this a .p12 file?  Is the password correct?  OpenSSL error: '.
@@ -132,13 +133,13 @@ class GoogleService extends Google
             }
             // TODO(beaton): is this part of the contract for the openssl_pkcs12_read
             // method?  What happens if there are multiple private keys?  Do we care?
-            if (! array_key_exists('pkey', $certs) || ! $certs['pkey']) {
+            if (!array_key_exists('pkey', $certs) || !$certs['pkey']) {
                 throw new InvalidArgumentException('No private key found in p12 file.');
             }
             $privateKey = openssl_pkey_get_private($certs['pkey']);
         }
 
-        if (! $privateKey) {
+        if (!$privateKey) {
             throw new InvalidArgumentException('Unable to load private key');
         }
 

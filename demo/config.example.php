@@ -5,51 +5,51 @@ function getApp($request)
     $config = [
         // OAuth1
         'bitbucket' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => '',
-            'redirect' => '',
+            'redirect'      => '',
         ],
         'twitter' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => '',
-            'redirect' => '',
+            'redirect'      => '',
         ],
         // OAuth2
         'dropbox' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => '',
-            'redirect' => '',
+            'redirect'      => '',
         ],
         'facebook' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => '',
-            'redirect' => '',
+            'redirect'      => '',
         ],
         'github' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => '',
-            'redirect' => '',
+            'redirect'      => '',
         ],
         'google' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => '',
-            'redirect' => ''.'?/callback',
+            'redirect'      => ''.'?/callback',
         ],
         'googleservice' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => 'path/to/p12',
             // 'client_secret' => 'path/to/json',
             'redirect' => '',
         ],
         'instagram' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => '',
-            'redirect' => '',
+            'redirect'      => '',
         ],
         'linkedin' => [
-            'client_id' => '',
+            'client_id'     => '',
             'client_secret' => '',
-            'redirect' => '',
+            'redirect'      => '',
         ],
     ];
 
@@ -60,6 +60,6 @@ function getApp($request)
 
     return [
         'request' => $request,
-        'config' => $configMap,
+        'config'  => $configMap,
     ];
 }

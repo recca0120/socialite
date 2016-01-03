@@ -16,7 +16,7 @@ class Facebook extends baseFacebook
             parse_str($responseBody, $data);
         }
 
-        if (null === $data || ! is_array($data)) {
+        if (null === $data || !is_array($data)) {
             throw new TokenResponseException('Unable to parse response.');
         } elseif (isset($data['error'])) {
             if (is_array($data['error']) === true) {
